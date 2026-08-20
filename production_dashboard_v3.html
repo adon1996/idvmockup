@@ -1,0 +1,1178 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans,-apple-system,'Inter',ui-sans-serif,sans-serif)}
+
+/* Layout */
+.shell{display:flex;height:100vh;min-height:860px;background:#F4F5F8}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+
+/* Light sidebar */
+.sidebar{width:220px;flex-shrink:0;background:#fff;border-right:1px solid #E9EAEF;display:flex;flex-direction:column}
+.sb-logo{padding:18px 18px 14px;border-bottom:1px solid #E9EAEF}
+.sb-logo span{font-size:15px;font-weight:700;color:#1B1F2E;letter-spacing:-.01em}
+.sb-logo em{display:block;font-size:11px;font-style:normal;color:#9CA3AF;margin-top:2px}
+.nav-sec{padding:16px 10px 6px}
+.nav-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#9CA3AF;padding:0 10px;margin-bottom:6px;font-weight:600}
+.nav-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;font-size:12px;color:#6B7280;cursor:pointer;transition:background .12s,color .12s}
+.nav-item:hover{background:#F4F5F8;color:#1B1F2E}
+.nav-item.active{background:#EEF2FF;color:#4338CA;font-weight:600}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* Topbar */
+.topbar{height:52px;background:#fff;border-bottom:1px solid #E9EAEF;display:flex;align-items:center;justify-content:space-between;padding:0 22px;flex-shrink:0;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.tb-crumb{font-size:12px;color:#9CA3AF;font-weight:400}
+.tb-title{font-size:12px;font-weight:600;color:#1B1F2E}
+.seg{display:flex;background:#F4F5F8;border:1px solid #E9EAEF;border-radius:8px;overflow:hidden;padding:2px}
+.seg-btn{padding:4px 12px;font-size:11px;font-weight:500;cursor:pointer;color:#9CA3AF;background:transparent;border:none;border-radius:6px;transition:all .12s}
+.seg-btn.on{background:#fff;color:#1B1F2E;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,0.08)}
+.avatar{width:28px;height:28px;border-radius:50%;background:#1B1F2E;color:#fff;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center}
+
+/* Content area */
+.content{flex:1;overflow:auto;padding:18px 22px;display:flex;flex-direction:column;gap:14px}
+
+/* KPI strip */
+.kpi-strip{display:grid;gap:12px}
+.metric{background:#fff;border-radius:12px;padding:14px 16px;border:1px solid #E9EAEF;transition:opacity .15s;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
+.metric.dimmed{opacity:.35}
+.metric-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700}
+.metric-val{font-size:20px;font-weight:700;color:#1B1F2E}
+.metric-d{font-size:11px;margin-top:5px;font-weight:500}
+
+/* Table card */
+.table-card{background:#fff;border:1px solid #E9EAEF;border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
+.tbar{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #E9EAEF;flex-wrap:wrap;gap:10px}
+.tbar-l{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tbar-title{font-size:13px;font-weight:700;color:#1B1F2E}
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:#EEF2FF;color:#4338CA}
+.tbar-r{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.filter-row{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.filter-lbl{font-size:11px;color:#9CA3AF;white-space:nowrap;font-weight:500}
+.chip{padding:3px 10px;border-radius:20px;font-size:11px;cursor:pointer;color:#9CA3AF;background:#F4F5F8;border:1px solid #E9EAEF;user-select:none;white-space:nowrap;transition:all .12s;font-weight:500}
+.chip.on{background:#1B1F2E;color:#fff;border-color:#1B1F2E}
+.chip-all{font-size:11px;cursor:pointer;padding:3px 10px;border-radius:20px;background:#F4F5F8;border:1px solid #E9EAEF;color:#6B7280;user-select:none;font-weight:500;transition:background .12s}
+.chip-all:hover{background:#E9EAEF}
+.tw{overflow-x:auto}
+
+/* Table */
+table{border-collapse:collapse;font-size:11px;width:100%}
+th,td{padding:7px 9px;white-space:nowrap}
+.th-cat{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;text-align:center;padding:8px 9px;border-bottom:1px solid #E9EAEF;background:#F9FAFB;color:#6B7280}
+.th-sub{font-size:10px;font-weight:600;text-align:center;padding:6px 9px;border-bottom:1px solid #E9EAEF;background:#F9FAFB}
+.th-yr{font-size:10px;text-align:right;padding:5px 9px;border-bottom:1px solid #E9EAEF;color:#9CA3AF;font-weight:500;background:#F9FAFB}
+.th-yr.cur{font-weight:700;color:#1B1F2E}
+.th-mo{text-align:left;padding:5px 9px 5px 16px;font-size:10px;font-weight:700;color:#9CA3AF;background:#F9FAFB;border-bottom:1px solid #E9EAEF;position:sticky;left:0;z-index:3}
+tbody tr{border-bottom:1px solid #F3F4F6}
+tbody tr:hover{background:#F9FAFB}
+tbody tr.total-row{background:#F4F5F8;font-weight:700}
+td.mo{text-align:left;padding-left:16px;font-weight:600;color:#374151;font-size:11px;position:sticky;left:0;z-index:2;background:#fff}
+tbody tr:hover td.mo{background:#F9FAFB}
+tbody tr.total-row td.mo{background:#F4F5F8}
+table thead th:first-child{position:sticky;left:0;z-index:3;background:#F9FAFB}
+td.prev{text-align:right;color:#9CA3AF}
+td.cur{text-align:right;color:#1B1F2E;font-weight:700}
+td.divl{border-left:1px solid #E9EAEF}
+td.tot{text-align:right;background:#F4F5F8;color:#1B1F2E;font-weight:700}
+.pill{display:inline-block;padding:1px 5px;border-radius:4px;font-size:10px;margin-left:2px;font-weight:600}
+.pill-up{background:#DCFCE7;color:#166534}
+.pill-dn{background:#FEE2E2;color:#991B1B}
+
+/* Year dropdown */
+.dd{position:relative;display:inline-block}
+.dd-btn{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 12px;background:#fff;border:1px solid #E9EAEF;border-radius:8px;font-size:12px;font-weight:500;color:#1B1F2E;cursor:pointer;min-width:148px;white-space:nowrap;transition:border-color .12s;line-height:1.2}
+.dd-btn:hover{border-color:#9CA3AF}
+.dd-btn.open{border-color:#1B1F2E}
+.dd-caret{flex-shrink:0;color:#9CA3AF;transition:transform .15s}
+.dd-btn.open .dd-caret{transform:rotate(180deg)}
+.dd-panel{position:absolute;top:calc(100% + 5px);right:0;background:#fff;border:1px solid #E9EAEF;border-radius:10px;box-shadow:0 8px 28px rgba(0,0,0,0.12);min-width:170px;z-index:200;display:none;overflow:hidden}
+.dd-panel.open{display:block}
+.dd-search-wrap{padding:8px 8px 6px;border-bottom:1px solid #F3F4F6}
+.dd-search-wrap input{width:100%;padding:6px 10px;border:1px solid #E9EAEF;border-radius:6px;font-size:12px;outline:none;color:#1B1F2E;background:#F9FAFB}
+.dd-search-wrap input:focus{border-color:#1B1F2E;background:#fff}
+.dd-opt{padding:9px 14px;font-size:12px;cursor:pointer;color:#374151;transition:background .1s}
+.dd-opt:hover:not(.on){background:#F4F5F8}
+.dd-opt.on{background:#1B1F2E;color:#fff;font-weight:600}
+.dd-opt-any{font-style:italic;color:#9CA3AF;border-bottom:1px solid #F3F4F6}
+.dd-opt-any:hover{background:#F4F5F8;color:#374151}
+.dd-opt.hidden{display:none}
+
+/* Factory checkboxes */
+.fac-cb-wrap{display:flex;flex-wrap:wrap;gap:5px 10px;max-width:280px}
+.fac-cb{display:flex;align-items:center;gap:5px;cursor:pointer;user-select:none;padding:2px 0}
+.fac-cb-box{width:13px;height:13px;border-radius:3px;border:2px solid;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .12s}
+.fac-cb-chk{width:8px;height:8px;display:none}
+.fac-cb.checked .fac-cb-chk{display:block}
+.fac-cb-lbl{font-size:11px;font-weight:600;transition:color .12s}
+.fac-dd-row{display:flex;align-items:center;gap:9px;padding:8px 14px;cursor:pointer;transition:background .1s}
+.fac-dd-row:hover{background:#F4F5F8}
+.fac-dd-row.hidden{display:none}
+.fac-dd-name{font-size:12px;color:#374151;font-weight:500;transition:color .12s}
+.fac-dd-row:not(.checked) .fac-dd-name{color:#9CA3AF}
+
+/* Sidebar — PROLOOK style */
+.sb-logo{padding:22px 18px 18px;border-bottom:1px solid #E9EAEF}
+.sb-logo span{font-size:22px;font-weight:800;letter-spacing:-.03em;color:#1B1F2E}
+.sb-user-card{padding:12px 14px 14px;border-bottom:1px solid #E9EAEF;display:flex;align-items:center;gap:10px}
+.sb-ua{width:38px;height:38px;border-radius:50%;background:#F4F5F8;color:#6B7280;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sb-un{font-size:12px;font-weight:600;color:#1B1F2E;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-ur{font-size:10px;color:#9CA3AF;margin-top:1px}
+.sb-umenu{margin-left:auto;color:#9CA3AF;cursor:pointer;flex-shrink:0}
+.nav-badge{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;border-radius:9px;font-size:10px;font-weight:700;padding:0 5px;background:#2563EB;color:#fff;margin-left:auto;flex-shrink:0}
+.nav-item-row{display:flex;align-items:center;width:100%}
+.nav-sub{display:flex;flex-direction:column;gap:1px;padding-bottom:4px}
+.nav-sub-item{font-size:11px;color:#9CA3AF;padding:5px 10px 5px 30px;cursor:pointer;border-radius:6px;transition:color .12s;list-style:none}
+.nav-sub-item:hover{color:#374151}
+.nav-sub-item.active{color:#1B1F2E;font-weight:600}
+
+/* Static date range */
+.date-range{display:flex;align-items:center;gap:4px;padding:5px 11px;border:1px solid #E9EAEF;border-radius:8px;font-size:11px;color:#6B7280;background:#fff;white-space:nowrap}
+.dr-sep{color:#D1D5DB;margin:0 3px}
+
+/* Topbar — app bar */
+.topbar{height:48px;padding:0 16px}
+.tb-icon-btn{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:7px;cursor:pointer;color:#6B7280;background:transparent;border:none;transition:background .12s;flex-shrink:0}
+.tb-icon-btn:hover{background:#F4F5F8}
+.tb-divider{width:1px;height:20px;background:#E9EAEF;flex-shrink:0}
+.qs-brand{display:flex;align-items:center;gap:7px;padding:5px 10px;border-radius:8px;cursor:pointer;transition:background .12s}
+.qs-brand:hover{background:#F4F5F8}
+.qs-icon{width:20px;height:20px;border-radius:5px;background:#E8453C;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.qs-name{font-size:13px;font-weight:700;color:#1B1F2E;letter-spacing:-.01em}
+.qs-caret{color:#9CA3AF;transition:transform .15s}
+.qs-brand.open .qs-caret{transform:rotate(180deg)}
+.bell-wrap{position:relative;display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:7px;cursor:pointer;color:#6B7280;transition:background .12s;flex-shrink:0}
+.bell-wrap:hover{background:#F4F5F8}
+.bell-dot{position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:#EF4444;border:1.5px solid #fff}
+
+/* Breadcrumb sub-header */
+.sub-header{display:flex;align-items:center;justify-content:space-between;padding:10px 22px 0;flex-shrink:0;flex-wrap:wrap;gap:8px}
+
+/* IDV icon button (inside factory th) */
+.idv-btn{display:inline-flex;align-items:center;justify-content:center;width:18px;height:14px;border-radius:4px;border:none;background:transparent;cursor:pointer;opacity:.55;transition:opacity .15s,transform .15s;padding:0;vertical-align:middle;margin-left:5px;flex-shrink:0}
+.idv-btn:hover{opacity:1;transform:scale(1.15)}
+.idv-btn svg{width:14px;height:11px;pointer-events:none}
+
+/* Modal overlay */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(2px)}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:14px;width:100%;max-width:860px;max-height:82vh;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,0.18);overflow:hidden;animation:modalIn .18s ease}
+@keyframes modalIn{from{opacity:0;transform:scale(.97) translateY(6px)}to{opacity:1;transform:none}}
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid #E9EAEF;flex-shrink:0}
+.modal-title{font-size:14px;font-weight:700;color:#1B1F2E}
+.modal-sub{font-size:11px;color:#9CA3AF;margin-top:2px}
+.modal-close{width:28px;height:28px;border:none;background:#F4F5F8;border-radius:7px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#6B7280;transition:background .12s;flex-shrink:0}
+.modal-close:hover{background:#E9EAEF;color:#1B1F2E}
+.modal-body{overflow-y:auto;overflow-x:auto;flex:1}
+.idv-tbl{width:100%;border-collapse:collapse;font-size:12px}
+.idv-tbl thead th{padding:10px 16px;text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#9CA3AF;background:#F9FAFB;border-bottom:1px solid #E9EAEF;white-space:nowrap;position:sticky;top:0}
+.idv-tbl thead th:first-child{text-align:left}
+.idv-tbl tbody td{padding:11px 16px;border-bottom:1px solid #F3F4F6;vertical-align:middle;text-align:center}
+.idv-tbl tbody td:first-child{text-align:left}
+.idv-tbl tbody tr:last-child td{border-bottom:none}
+.idv-tbl tbody tr:hover td{background:#F9FAFB}
+
+/* Clickable drill-down cells */
+td.cell-link{cursor:pointer}
+td.cell-link:hover{text-decoration:underline}
+
+/* ── Responsive: light-touch narrowing for tablet/mobile ──────────
+   Table stays a table everywhere; small screens default to a single
+   factory + single year (via JS) so it's narrow enough to read
+   without much horizontal scroll, and the sidebar becomes a drawer. */
+.sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:499}
+.sidebar-backdrop.open{display:block}
+
+@media (max-width: 900px){
+  .sidebar{
+    position:fixed;top:0;left:0;bottom:0;z-index:500;
+    transform:translateX(-100%);
+    transition:transform .2s ease;
+  }
+  .sidebar.open{
+    transform:translateX(0);
+    box-shadow:8px 0 24px rgba(0,0,0,0.18);
+  }
+  .content{padding:14px 12px;gap:10px}
+  .sub-header{padding:10px 12px 0}
+  .kpi-strip{gap:8px}
+  .metric{padding:11px 12px}
+  .tbar{padding:12px 14px}
+  .modal-box{max-width:95vw;max-height:88vh}
+}
+
+@media (max-width: 480px){
+  .sb-logo span{font-size:18px}
+  .qs-name{font-size:12px}
+  .metric-val{font-size:17px}
+}
+</style>
+
+<h2 style="position:absolute;left:-9999px">Production dashboard — 7 factories, monthly approved and shipped units 2021–2026 with interactive year and factory filters.</h2>
+
+<div class="shell">
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<aside class="sidebar" id="sidebarEl">
+  <div class="sb-logo"><span>PROLOOK</span></div>
+  <div class="sb-user-card">
+    <div class="sb-ua"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="6.5" r="3" stroke="#6B7280" stroke-width="1.4"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="#6B7280" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+    <div style="min-width:0;flex:1">
+      <div class="sb-un">Seo Administrator</div>
+      <div class="sb-ur">Admin</div>
+    </div>
+    <svg class="sb-umenu" width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2 4h11M2 7.5h11M2 11h11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+  </div>
+
+  <div class="nav-sec">
+    <div class="nav-lbl">Analytics Reports</div>
+    <div class="nav-item">
+      <div class="nav-item-row">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="7" width="2.5" height="5" rx=".5" fill="currentColor"/><rect x="5.25" y="4" width="2.5" height="8" rx=".5" fill="currentColor"/><rect x="9.5" y="1" width="2.5" height="11" rx=".5" fill="currentColor"/></svg>
+        <span style="margin-left:8px">Dashboard</span>
+        <span class="nav-badge">5</span>
+      </div>
+    </div>
+    <div class="nav-sub">
+      <div class="nav-sub-item">Overview</div>
+      <div class="nav-sub-item">Old Overview</div>
+      <div class="nav-sub-item">Production</div>
+      <div class="nav-sub-item">Sales</div>
+      <div class="nav-sub-item">Sales in Units</div>
+      <div class="nav-sub-item active">Production Dashboard</div>
+    </div>
+  </div>
+
+  <div class="nav-sec" style="margin-top:2px">
+    <div class="nav-lbl">Acquisition</div>
+    <div class="nav-item">
+      <div class="nav-item-row">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="5" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M1.5 12c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        <span style="margin-left:8px">Engagements</span>
+        <span class="nav-badge">1</span>
+      </div>
+    </div>
+    <div class="nav-sub">
+      <div class="nav-sub-item">Pages and Screens</div>
+    </div>
+  </div>
+
+  <div style="flex:1"></div>
+</aside>
+
+<div class="main">
+  <header class="topbar">
+    <div style="display:flex;align-items:center;gap:4px">
+      <button class="tb-icon-btn" id="sidebarToggleBtn">
+        <svg width="17" height="17" viewBox="0 0 17 17" fill="none"><path d="M2 4h13M2 8.5h13M2 13h13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <div class="tb-divider"></div>
+      <div class="dd" id="brandTopDd">
+        <div class="qs-brand" id="brandTopBtn">
+          <div class="qs-icon">
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 8.5L5.5 2l3.5 6.5H2z" fill="#fff" opacity=".9"/></svg>
+          </div>
+          <span class="qs-name" id="brandTopName">QUICKSTRIKE</span>
+          <svg class="qs-caret" width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 4l3.5 3.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="dd-panel" id="brandTopPanel" style="right:auto;left:0">
+          <div class="dd-search-wrap"><input id="brandTopSearch" type="text" placeholder="Search brand…"></div>
+          <div class="dd-opt on" id="brandTopAll" data-brand="__ALL__">QUICKSTRIKE — All Brands</div>
+          <div id="brandTopOpts" style="overflow-y:auto;max-height:260px"></div>
+        </div>
+      </div>
+    </div>
+    <div class="bell-wrap">
+      <svg width="17" height="17" viewBox="0 0 17 17" fill="none"><path d="M8.5 2.5A4.5 4.5 0 0 1 13 7v2.5l1.5 2.5H2.5L4 9.5V7A4.5 4.5 0 0 1 8.5 2.5z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 13.5a1.5 1.5 0 0 0 3 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <span class="bell-dot"></span>
+    </div>
+  </header>
+
+  <div class="sub-header">
+    <div style="display:flex;align-items:center;gap:6px">
+      <span class="tb-crumb">Home &nbsp;›&nbsp; Dashboard &nbsp;›&nbsp;</span>
+      <span class="tb-title">Production Dashboard</span>
+    </div>
+    <!-- <div class="date-range">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="2" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M4 1v2M9 1v2M1 5h11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <span>Current: Jan 01, 2025 – Apr 30, 2026</span>
+      <span class="dr-sep">|</span>
+      <span>Compare: Jan 01, 2024 – Apr 30, 2025</span>
+    </div> -->
+  </div>
+
+  <div class="content">
+    <div class="kpi-strip" id="kpiStrip"></div>
+
+    <div class="table-card">
+      <div class="tbar">
+        <div class="tbar-l" style="flex-direction:column;align-items:flex-start;gap:8px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="tbar-title" id="tbarTitle">Unit output</span>
+            <span class="badge" id="activeBadge">2025 vs 2026</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="seg" id="viewSeg">
+              <button class="seg-btn on" data-mode="units">Units</button>
+              <button class="seg-btn" data-mode="idv">Item Difficulty Value</button>
+            </div>
+          </div>
+        </div>
+        <div class="tbar-r">
+          <div class="filter-row" style="align-items:center">
+            <span class="filter-lbl">Years</span>
+            <div class="dd" id="yrDd">
+              <button class="dd-btn" id="yrBtn">
+                <span id="yrBtnText">2025, 2026</span>
+                <svg class="dd-caret" width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 3.5l3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="dd-panel" id="yrPanel">
+                <div class="dd-search-wrap"><input id="yrSearch" type="text" placeholder="Search year…"></div>
+                <div class="dd-opt dd-opt-any" id="yrOptAny">— Any —</div>
+                <div class="dd-opt" data-yr="2021">2021</div>
+                <div class="dd-opt" data-yr="2022">2022</div>
+                <div class="dd-opt" data-yr="2023">2023</div>
+                <div class="dd-opt" data-yr="2024">2024</div>
+                <div class="dd-opt on" data-yr="2025">2025</div>
+                <div class="dd-opt on" data-yr="2026">2026</div>
+              </div>
+            </div>
+          </div>
+          <div class="filter-row" style="align-items:center">
+            <span class="filter-lbl">Factories</span>
+            <div class="dd" id="facDd">
+              <button class="dd-btn" id="facBtn">
+                <span id="facBtnText">All factories</span>
+                <svg class="dd-caret" width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 3.5l3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="dd-panel" id="facPanel">
+                <div class="dd-search-wrap"><input id="facSearch" type="text" placeholder="Search factory…"></div>
+                <div class="dd-opt dd-opt-any" id="facOptAny">— Any —</div>
+                <div id="facOpts" style="overflow-y:auto;max-height:220px"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tw"><table id="mainTable"></table></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+const FACTORIES = [
+  { id:'blb', label:'BLB', fullName:'BLB - Billerby Corporation',                              code:'', color:'#EF9F27', textColor:'#854F0B', bg:'#fff4ec', border:'#EF9F27' },
+  { id:'cpa', label:'CPA', fullName:'CPA - Cap America',                                        code:'', color:'#D4527E', textColor:'#7A2A48', bg:'#FCE9F0', border:'#D4527E' },
+  { id:'hcm', label:'HCM', fullName:'HCM - QuickStrike Manufacturing Co. LTD',                  code:'', color:'#378ADD', textColor:'#185FA5', bg:'#eef3fc', border:'#378ADD' },
+  { id:'jcg', label:'JCG', fullName:'JCG - digitalPRO',                                         code:'', color:'#7C3AED', textColor:'#4C2A8F', bg:'#F1ECFE', border:'#7C3AED' },
+  { id:'mdj', label:'MDJ', fullName:'MDJ - Monster Digital',                                    code:'', color:'#3B4E8C', textColor:'#232F58', bg:'#EAEDF7', border:'#3B4E8C' },
+  { id:'pmp', label:'PMP', fullName:'PMP - Alson Sportswear Inc.',                              code:'', color:'#7F77DD', textColor:'#3C3489', bg:'#EEEDFE', border:'#7F77DD' },
+  { id:'qts', label:'QTS', fullName:'QTS - U.E.T. International South Carolina Warehouse',      code:'', color:'#5AB4D8', textColor:'#296A82', bg:'#EAF6FB', border:'#5AB4D8' },
+  { id:'qxx', label:'QXX', fullName:'QXX - QuickStrike Asia Ltd.',                              code:'', color:'#1D9E75', textColor:'#0F6E56', bg:'#E1F5EE', border:'#1D9E75' },
+  { id:'sox', label:'SOX', fullName:'SOX - U.E.T. International Corp.',                         code:'', color:'#D85A30', textColor:'#993C1D', bg:'#FAECE7', border:'#D85A30' },
+  { id:'spy', label:'SPY', fullName:'Screen Play',                                              code:'', color:'#4C9A2A', textColor:'#2D5C19', bg:'#EEF7E9', border:'#4C9A2A' },
+  { id:'svn', label:'SVN', fullName:'SVN - The Sang',                                           code:'', color:'#D4537E', textColor:'#72243E', bg:'#FBEAF0', border:'#D4537E' },
+  { id:'xsd', label:'XSD', fullName:'XSD - Quan Zhou Sheng Du Apparel Co. Ltd',                 code:'', color:'#888780', textColor:'#444441', bg:'#F1EFE8', border:'#888780' },
+];
+
+// Deliberately dark/neutral so the aggregate Totals column never reads as "just another factory".
+const TOTALS_COLOR = { bg:'#3A3F4B', text:'#FFFFFF', border:'#6B7280' };
+
+const RAW = {
+  blb:{
+    approved:{
+      2021:[24255,24929,28075,22654,18136,28568,52956,29423,18767,29221,28742,28976],
+      2022:[42826,38153,38256,35434,36126,51565,38020,33177,22809,33005,29076,36077],
+      2023:[46652,48521,35723,33558,31718,41639,48361,44184,26807,32387,32683,46546],
+      2024:[53295,50359,34902,30600,25849,34839,55762,44969,25756,32164,33407,43206],
+      2025:[64923,48285,40605,38705,37328,38818,61659,45190,28205,28903,30213,41347],
+      2026:[58451,46355,40186,12719,0,0,0,0,0,0,0,0]
+    },
+    shipped:{
+      2021:[18244,22291,31124,24965,28149,17906,30559,35777,33464,28013,25816,27148],
+      2022:[31085,36472,44764,33126,27903,38950,44141,43072,45813,28509,29651,28786],
+      2023:[36306,39675,54012,37981,41285,30630,41363,44735,41736,30500,29728,26419],
+      2024:[43865,48496,45756,41978,32179,33496,42420,44786,43702,35989,32659,28691],
+      2025:[47955,45680,62618,43029,44591,41197,45885,48595,43313,32563,30006,23569],
+      2026:[43816,51711,53102,11873,0,0,0,0,0,0,0,0]
+    }
+  },
+  hcm:{
+    approved:{
+      2021:[0,0,0,0,0,0,0,0,0,0,0,0],
+      2022:[0,0,0,0,0,0,0,0,0,0,0,0],
+      2023:[0,0,0,0,0,0,0,0,0,0,0,0],
+      2024:[0,0,0,0,0,0,0,65,1260,2827,7564,6632],
+      2025:[5601,6393,8199,7505,6977,9949,10994,11874,10082,13926,17304,10799],
+      2026:[7472,11490,12525,3224,0,0,0,0,0,0,0,0]
+    },
+    shipped:{
+      2021:[0,0,0,0,0,0,0,0,0,0,0,0],
+      2022:[0,0,0,0,0,0,0,0,0,0,0,0],
+      2023:[0,0,0,0,0,0,0,0,0,0,0,0],
+      2024:[0,0,0,0,0,0,0,65,1519,2352,4099,7921],
+      2025:[8474,6065,8181,5989,8226,10119,9949,10975,10842,12952,16270,13382],
+      2026:[8348,11545,11788,3964,0,0,0,0,0,0,0,0]
+    }
+  },
+  pmp:{
+    approved:{
+      2021:[8200,7400,9100,7800,6500,9200,11000,8900,7200,8600,8100,9400],
+      2022:[12000,11500,12800,10200,11000,13500,14200,12000,9800,11200,10500,12600],
+      2023:[14500,13800,15200,12400,12800,15800,17200,14600,11800,13400,12800,15100],
+      2024:[16200,15400,14800,13200,11800,14200,18400,15800,12600,13800,13200,15600],
+      2025:[18400,16800,17200,16400,15600,17800,20200,17600,14200,15400,14800,17200],
+      2026:[19200,17800,18400,6800,0,0,0,0,0,0,0,0]
+    },
+    shipped:{
+      2021:[7200,6800,8400,7200,6200,8400,10200,8200,6800,7900,7500,8700],
+      2022:[11200,10600,11800,9400,10200,12400,13200,11200,9200,10400,9800,11800],
+      2023:[13600,12800,14200,11600,12000,14800,16200,13800,11200,12600,12000,14200],
+      2024:[15200,14600,13800,12400,11200,13400,17200,14800,12000,13000,12400,14600],
+      2025:[17200,15800,16200,15400,14800,16800,18800,16600,13600,14600,14000,16200],
+      2026:[18200,16800,17400,6400,0,0,0,0,0,0,0,0]
+    }
+  },
+  qxx:{
+    approved:{
+      2021:[3200,2900,3600,3100,2700,3800,4500,3700,2900,3400,3200,3700],
+      2022:[5100,4800,5400,4300,4600,5700,6000,5100,4100,4700,4400,5300],
+      2023:[6200,5800,6400,5200,5400,6600,7200,6100,5000,5600,5400,6300],
+      2024:[6800,6400,6200,5600,5000,6000,7600,6500,5200,5700,5500,6400],
+      2025:[7600,7000,7200,6800,6500,7400,8400,7200,5800,6200,6100,7000],
+      2026:[7900,7400,7600,2800,0,0,0,0,0,0,0,0]
+    },
+    shipped:{
+      2021:[3000,2700,3300,2900,2500,3500,4200,3400,2700,3100,3000,3400],
+      2022:[4800,4500,5100,4000,4300,5300,5600,4800,3900,4400,4100,4900],
+      2023:[5800,5500,6000,4900,5100,6200,6800,5800,4700,5300,5100,5900],
+      2024:[6400,6000,5800,5200,4700,5600,7100,6100,4900,5400,5200,6000],
+      2025:[7100,6600,6800,6300,6100,6900,7800,6800,5500,5900,5700,6600],
+      2026:[7400,6900,7100,2600,0,0,0,0,0,0,0,0]
+    }
+  },
+  sox:{
+    approved:{
+      2021:[4100,3800,4600,3900,3300,4700,5600,4600,3600,4300,4000,4700],
+      2022:[6400,6000,6700,5400,5700,7100,7500,6300,5100,5800,5500,6600],
+      2023:[7700,7200,8000,6500,6700,8200,9000,7600,6200,7000,6700,7800],
+      2024:[8500,8000,7700,6900,6200,7400,9500,8100,6500,7100,6800,8000],
+      2025:[9500,8700,9000,8500,8100,9200,10500,9000,7300,7700,7600,8700],
+      2026:[9800,9200,9500,3500,0,0,0,0,0,0,0,0]
+    },
+    shipped:{
+      2021:[3800,3500,4200,3600,3100,4300,5200,4200,3300,3900,3700,4300],
+      2022:[5900,5600,6200,5000,5300,6500,6900,5800,4800,5400,5100,6100],
+      2023:[7100,6700,7400,6100,6300,7600,8400,7100,5800,6500,6200,7200],
+      2024:[7900,7400,7100,6400,5800,6900,8800,7500,6100,6600,6300,7400],
+      2025:[8800,8100,8400,7900,7600,8600,9800,8400,6900,7200,7100,8100],
+      2026:[9100,8500,8800,3200,0,0,0,0,0,0,0,0]
+    }
+  },
+  svn:{
+    approved:{
+      2021:[5100,4700,5800,5000,4200,5900,7000,5700,4600,5400,5100,5900],
+      2022:[8200,7700,8600,7000,7300,9100,9500,8100,6500,7500,7000,8400],
+      2023:[9800,9200,10200,8300,8600,10400,11400,9700,7800,8900,8600,9900],
+      2024:[10900,10200,9800,8800,7900,9500,12100,10300,8200,9100,8700,10100],
+      2025:[12100,11100,11400,10800,10300,11700,13300,11500,9200,9800,9600,11100],
+      2026:[12500,11700,12000,4400,0,0,0,0,0,0,0,0]
+    },
+    shipped:{
+      2021:[4700,4400,5300,4600,3900,5500,6500,5200,4200,4900,4700,5400],
+      2022:[7600,7200,8000,6500,6800,8500,8800,7500,6100,7000,6500,7800],
+      2023:[9100,8700,9500,7700,8000,9700,10600,9000,7300,8300,8000,9200],
+      2024:[10100,9700,9100,8200,7400,8800,11200,9600,7700,8500,8100,9400],
+      2025:[11300,10400,10600,10000,9600,10900,12400,10700,8600,9100,8900,10400],
+      2026:[11600,10900,11100,4000,0,0,0,0,0,0,0,0]
+    }
+  },
+  xsd:{
+    approved:{
+      2021:[5800,5400,6500,5600,4700,6700,7900,6500,5200,6100,5700,6600],
+      2022:[9100,8500,9500,7700,8100,10100,10600,9000,7200,8300,7800,9300],
+      2023:[10900,10200,11300,9200,9500,11600,12700,10700,8700,9900,9500,11000],
+      2024:[12000,11300,10900,9800,8800,10500,13400,11400,9100,10100,9600,11200],
+      2025:[13400,12300,12700,12000,11400,13000,14800,12700,10200,10900,10700,12300],
+      2026:[13900,13000,13400,4900,0,0,0,0,0,0,0,0]
+    },
+    shipped:{
+      2021:[5300,5000,5900,5200,4400,6100,7200,5900,4800,5600,5200,6100],
+      2022:[8400,7800,8700,7100,7500,9300,9800,8300,6700,7700,7200,8600],
+      2023:[10100,9400,10400,8500,8800,10700,11700,9900,8100,9200,8700,10100],
+      2024:[11100,10400,10100,9000,8200,9700,12400,10500,8500,9400,8900,10400],
+      2025:[12400,11300,11700,11000,10600,12000,13700,11700,9500,10100,9900,11400],
+      2026:[12800,12000,12400,4500,0,0,0,0,0,0,0,0]
+    }
+  }
+};
+
+// Placeholder factories — added to QX7 but not yet producing orders (no data yet).
+const ZERO_YEAR = [0,0,0,0,0,0,0,0,0,0,0,0];
+const ZERO_ALL_YEARS = {2021:ZERO_YEAR,2022:ZERO_YEAR,2023:ZERO_YEAR,2024:ZERO_YEAR,2025:ZERO_YEAR,2026:ZERO_YEAR};
+['cpa','jcg','mdj','qts','spy'].forEach(fid=>{
+  RAW[fid] = { approved: ZERO_ALL_YEARS, shipped: ZERO_ALL_YEARS };
+});
+
+const IDV_DATA = {
+  blb:[
+    {item:'Compression Pant, Full Length, Men and Youth',            sport:'APP', brand:'PLS',  lineGroup:'', idv:1.5,  qty:1200},
+    {item:'Compression Pant, Men and Youth, 3/4 Length',             sport:'APP', brand:'RDL',  lineGroup:'', idv:1.5,  qty:800},
+    {item:'Jersey, Reversible, 1-Ply, Full-Length, Men and Youth',   sport:'FB',  brand:'NWB',  lineGroup:'', idv:2.25, qty:2400},
+    {item:'Jersey, Reversible, 1-Ply, Waist-Cut, Men and Youth',     sport:'FB',  brand:'PLS',  lineGroup:'', idv:2.25, qty:1800},
+    {item:'1/4 Zip Jacket, Unisex and Youth, Long Sleeve',           sport:'APP', brand:'RDL',  lineGroup:'', idv:5.0,  qty:600},
+    {item:'1/4 Zip Jacket, Unisex and Youth, Short Sleeve',          sport:'APP', brand:'NWB',  lineGroup:'', idv:2.5,  qty:750},
+    {item:'Ace Pro Short, Women and Youth',                           sport:'VB',  brand:'PLS',  lineGroup:'', idv:4.0,  qty:1100},
+    {item:'Ace Jersey, Crew Neck, Cap Sleeve, Women and Youth',       sport:'VB',  brand:'RDL',  lineGroup:'', idv:1.0,  qty:950},
+    {item:'Ace Jersey, Crew Neck, Long Sleeve, Women and Youth',      sport:'VB',  brand:'NWB',  lineGroup:'', idv:1.0,  qty:820},
+    {item:'Ace Jersey, Crew Neck, Short Sleeve, Women and Youth',     sport:'VB',  brand:'PLS',  lineGroup:'', idv:1.0,  qty:1450},
+    {item:'Ace Jersey, Scooped V-Neck, Cap Sleeve, Women and Youth',  sport:'VB',  brand:'RDL',  lineGroup:'', idv:1.25, qty:680},
+    {item:'Ace Jersey, Scooped V-Neck, Long Sleeve, Women and Youth', sport:'VB',  brand:'NWB',  lineGroup:'', idv:1.25, qty:590},
+    {item:'Ace Jersey, Scooped V-Neck, Short Sleeve, Women and Youth',sport:'VB',  brand:'PLS',  lineGroup:'', idv:1.25, qty:720},
+    {item:'Cinch Sack, Unisex',                                       sport:'APP', brand:'RDL',  lineGroup:'', idv:0.75, qty:2100},
+    {item:'Champion Jersey, Men and Youth',                           sport:'SCR', brand:'NWB',  lineGroup:'', idv:1.0,  qty:1300},
+    {item:'Champion Jersey, Women',                                   sport:'SCR', brand:'PLS',  lineGroup:'', idv:1.0,  qty:900},
+    {item:'Champion Short, Men and Youth',                            sport:'SCR', brand:'RDL',  lineGroup:'', idv:1.0,  qty:1150},
+    {item:'Champion Short, Women',                                    sport:'SCR', brand:'NWB',  lineGroup:'', idv:1.0,  qty:780},
+    {item:'Game Day Jacket, Men',                                     sport:'APP', brand:'PLS',  lineGroup:'', idv:3.0,  qty:450},
+    {item:'Game Day Jacket, Women',                                   sport:'APP', brand:'RDL',  lineGroup:'', idv:2.75, qty:380},
+    {item:'Compression Short, Men and Youth',                         sport:'WR',  brand:'NWB',  lineGroup:'', idv:1.0,  qty:1600},
+    {item:'Alli Performance Tee, Unisex',                             sport:'APP', brand:'ALLI', lineGroup:'', idv:1.0,  qty:1400},
+    {item:'Alli Warm-Up Jacket, Unisex',                              sport:'APP', brand:'ALLI', lineGroup:'', idv:3.25, qty:520},
+    {item:'AXE Training Jersey, Men',                                 sport:'FB',  brand:'AXE',  lineGroup:'', idv:2.0,  qty:1050},
+    {item:'AXE Compression Tank, Unisex',                             sport:'WR',  brand:'AXE',  lineGroup:'', idv:1.25, qty:890},
+    {item:'Baden Baseball Jersey, Men and Youth',                     sport:'BB',  brand:'BDN',  lineGroup:'', idv:2.75, qty:760},
+    {item:'Baden Practice Pant, Men and Youth',                       sport:'BB',  brand:'BDN',  lineGroup:'', idv:1.75, qty:1020},
+  ],
+  hcm:[
+    {item:'Athletic Jersey S/S',        sport:'FB',  brand:'PLS',  lineGroup:'', idv:2.8, qty:3200},
+    {item:'Athletic Jersey L/S',        sport:'FB',  brand:'DSG',  lineGroup:'', idv:3.2, qty:2100},
+    {item:'Basketball Shorts',          sport:'BB',  brand:'STK',  lineGroup:'', idv:1.9, qty:4500},
+    {item:'Track Pants',                sport:'APP', brand:'PLS',  lineGroup:'', idv:2.4, qty:1800},
+    {item:'Training Jacket',            sport:'APP', brand:'DSG',  lineGroup:'', idv:4.2, qty:900},
+    {item:'Alli Tech Tee',              sport:'APP', brand:'ALLI', lineGroup:'', idv:1.0, qty:2600},
+    {item:'Alli Track Jacket',          sport:'APP', brand:'ALLI', lineGroup:'', idv:3.0, qty:700},
+    {item:'AXE Performance Polo',       sport:'APP', brand:'AXE',  lineGroup:'', idv:1.5, qty:1900},
+    {item:'AXE Training Short',         sport:'APP', brand:'AXE',  lineGroup:'', idv:1.2, qty:2400},
+    {item:'Baden Basketball Jersey',    sport:'BB',  brand:'BDN',  lineGroup:'', idv:2.4, qty:1500},
+    {item:'Baden Warm-Up Pant',         sport:'BB',  brand:'BDN',  lineGroup:'', idv:2.0, qty:1100},
+  ],
+  pmp:[
+    {item:'Custom Twill Jersey S/S',    sport:'FB',  brand:'PLS',  lineGroup:'', idv:3.5, qty:2800},
+    {item:'Custom Twill Jersey L/S',    sport:'FB',  brand:'RVL',  lineGroup:'', idv:4.0, qty:1600},
+    {item:'Twill Shorts',               sport:'APP', brand:'LGN',  lineGroup:'', idv:2.3, qty:3400},
+    {item:'Twill Pants',                sport:'APP', brand:'PLS',  lineGroup:'', idv:2.8, qty:2200},
+    {item:'Twill Hoodie',               sport:'APP', brand:'RVL',  lineGroup:'', idv:4.5, qty:750},
+    {item:'Embroidered Cap',            sport:'APP', brand:'LGN',  lineGroup:'', idv:3.1, qty:1900},
+    {item:'Alli Twill Polo',            sport:'APP', brand:'ALLI', lineGroup:'', idv:2.6, qty:1300},
+    {item:'Alli Embroidered Beanie',    sport:'APP', brand:'ALLI', lineGroup:'', idv:1.8, qty:900},
+    {item:'AXE Twill Jacket',           sport:'APP', brand:'AXE',  lineGroup:'', idv:4.2, qty:620},
+    {item:'AXE Twill Shorts',           sport:'APP', brand:'AXE',  lineGroup:'', idv:2.1, qty:1700},
+    {item:'Baden Twill Jersey',         sport:'BB',  brand:'BDN',  lineGroup:'', idv:3.4, qty:980},
+    {item:'Baden Twill Cap',            sport:'BB',  brand:'BDN',  lineGroup:'', idv:1.6, qty:1400},
+  ],
+  qxx:[
+    {item:'Performance Jersey',         sport:'FB',  brand:'PLS',  lineGroup:'', idv:2.6, qty:5100},
+    {item:'Training Shirt',             sport:'APP', brand:'VIC',  lineGroup:'', idv:2.1, qty:3800},
+    {item:'Athletic Shorts',            sport:'APP', brand:'QXT',  lineGroup:'', idv:1.8, qty:6200},
+    {item:'Compression Leggings',       sport:'WR',  brand:'PLS',  lineGroup:'', idv:3.0, qty:2400},
+    {item:'Alli Performance Shirt',     sport:'APP', brand:'ALLI', lineGroup:'', idv:2.0, qty:3200},
+    {item:'Alli Compression Short',     sport:'WR',  brand:'ALLI', lineGroup:'', idv:1.9, qty:2800},
+    {item:'AXE Training Jersey',        sport:'FB',  brand:'AXE',  lineGroup:'', idv:2.7, qty:2100},
+    {item:'AXE Athletic Pant',          sport:'APP', brand:'AXE',  lineGroup:'', idv:2.2, qty:2900},
+    {item:'Baden Game Jersey',          sport:'BB',  brand:'BDN',  lineGroup:'', idv:2.9, qty:1800},
+    {item:'Baden Practice Jersey',      sport:'BB',  brand:'BDN',  lineGroup:'', idv:1.6, qty:2600},
+  ],
+  sox:[
+    {item:'Knee High Socks',            sport:'APP', brand:'PLS',  lineGroup:'', idv:2.9, qty:8400},
+    {item:'Ankle Socks',                sport:'APP', brand:'NWB',  lineGroup:'', idv:1.7, qty:12600},
+    {item:'Quarter Socks',              sport:'APP', brand:'RSN',  lineGroup:'', idv:1.9, qty:9800},
+    {item:'No-Show Socks',              sport:'APP', brand:'PLS',  lineGroup:'', idv:1.5, qty:7200},
+    {item:'Crew Socks',                 sport:'APP', brand:'NWB',  lineGroup:'', idv:2.1, qty:11000},
+    {item:'Compression Socks',          sport:'WR',  brand:'RSN',  lineGroup:'', idv:3.3, qty:3600},
+    {item:'Alli Ankle Sock',            sport:'APP', brand:'ALLI', lineGroup:'', idv:1.6, qty:9200},
+    {item:'Alli Crew Sock',             sport:'APP', brand:'ALLI', lineGroup:'', idv:2.0, qty:7100},
+    {item:'AXE Performance Sock',       sport:'APP', brand:'AXE',  lineGroup:'', idv:1.8, qty:8300},
+    {item:'AXE Compression Sleeve',     sport:'WR',  brand:'AXE',  lineGroup:'', idv:2.5, qty:4200},
+    {item:'Baden Baseball Sock',        sport:'BB',  brand:'BDN',  lineGroup:'', idv:1.9, qty:6800},
+    {item:'Baden Stirrup Sock',         sport:'BB',  brand:'BDN',  lineGroup:'', idv:1.4, qty:5400},
+  ],
+  svn:[
+    {item:'Premium Jersey S/S',         sport:'FB',  brand:'PLS',  lineGroup:'', idv:3.7, qty:1800},
+    {item:'Premium Jersey L/S',         sport:'FB',  brand:'RDL',  lineGroup:'', idv:4.2, qty:1200},
+    {item:'Premium Shorts',             sport:'APP', brand:'DSG',  lineGroup:'', idv:2.6, qty:2400},
+    {item:'Premium Track Jacket',       sport:'APP', brand:'PLS',  lineGroup:'', idv:4.8, qty:600},
+    {item:'Premium Hoodie',             sport:'APP', brand:'RDL',  lineGroup:'', idv:4.5, qty:900},
+    {item:'Alli Premium Tee',           sport:'APP', brand:'ALLI', lineGroup:'', idv:2.4, qty:1400},
+    {item:'Alli Premium Short',         sport:'APP', brand:'ALLI', lineGroup:'', idv:2.0, qty:1100},
+    {item:'AXE Premium Jersey',         sport:'FB',  brand:'AXE',  lineGroup:'', idv:3.9, qty:850},
+    {item:'AXE Premium Pant',           sport:'APP', brand:'AXE',  lineGroup:'', idv:2.7, qty:1250},
+    {item:'Baden Premium Jersey',       sport:'BB',  brand:'BDN',  lineGroup:'', idv:3.5, qty:700},
+    {item:'Baden Premium Cap',          sport:'BB',  brand:'BDN',  lineGroup:'', idv:1.5, qty:1600},
+  ],
+  xsd:[
+    {item:'Sublimated Jersey S/S',      sport:'FB',  brand:'PLS',  lineGroup:'', idv:3.1, qty:4200},
+    {item:'Sublimated Jersey L/S',      sport:'FB',  brand:'STK',  lineGroup:'', idv:3.6, qty:2800},
+    {item:'Sublimated Shorts',          sport:'APP', brand:'RVL',  lineGroup:'', idv:2.2, qty:5600},
+    {item:'Sublimated Warm-Up',         sport:'APP', brand:'PLS',  lineGroup:'', idv:4.3, qty:1400},
+    {item:'Sublimated Cap',             sport:'APP', brand:'STK',  lineGroup:'', idv:2.7, qty:3100},
+    {item:'Alli Sublimated Tee',        sport:'APP', brand:'ALLI', lineGroup:'', idv:2.0, qty:3600},
+    {item:'Alli Sublimated Short',      sport:'APP', brand:'ALLI', lineGroup:'', idv:2.4, qty:2900},
+    {item:'AXE Sublimated Jersey',      sport:'FB',  brand:'AXE',  lineGroup:'', idv:3.3, qty:2400},
+    {item:'AXE Sublimated Pant',        sport:'APP', brand:'AXE',  lineGroup:'', idv:2.6, qty:1900},
+    {item:'Baden Sublimated Jersey',    sport:'BB',  brand:'BDN',  lineGroup:'', idv:3.0, qty:2100},
+    {item:'Baden Sublimated Cap',       sport:'BB',  brand:'BDN',  lineGroup:'', idv:1.7, qty:3300},
+  ],
+};
+['cpa','jcg','mdj','qts','spy'].forEach(fid=>{ IDV_DATA[fid] = []; });
+
+// Master brand list (from QX7 Brands tab) — used for the Brand filter.
+const BRANDS = [
+  {code:'ALLI', name:'Alli'},
+  {code:'AXE',  name:'AXE'},
+  {code:'BDN',  name:'Baden'},
+  {code:'CORE', name:'PLAYGROUND'},
+  {code:'DEMO', name:'Demo - Sample Brand'},
+  {code:'DSG',  name:'Dicks Sporting Goods'},
+  {code:'GDP',  name:'Game Day Polo'},
+  {code:'GM1',  name:'Prevail'},
+  {code:'LGN',  name:'Legends'},
+  {code:'MCC',  name:'Marucci Sports'},
+  {code:'MNT',  name:'Montrose'},
+  {code:'NWB',  name:'New Balance'},
+  {code:'PE',   name:'Phenom Elite'},
+  {code:'PFG',  name:'Perfect Game'},
+  {code:'PLS',  name:'PROLOOK'},
+  {code:'QTP',  name:'QUICKTURN Promo'},
+  {code:'QXT',  name:'Quickstrike'},
+  {code:'RDL',  name:'Riddell'},
+  {code:'RSN',  name:'Richardson'},
+  {code:'RVL',  name:'Rival'},
+  {code:'STK',  name:'Sport-Tek'},
+  {code:'TST',  name:'TEST BRAND'},
+  {code:'VIC',  name:'Victus'},
+];
+
+// On small screens, default to a single factory + single year so the table
+// is narrow enough to read without heavy horizontal scrolling. This is only
+// an initial default — the dropdowns still let you pick more.
+const IS_NARROW_VIEWPORT = window.matchMedia('(max-width: 768px)').matches;
+let activeYears = new Set(IS_NARROW_VIEWPORT ? [2026] : [2025,2026]);
+let activeFactories = new Set(IS_NARROW_VIEWPORT ? [FACTORIES[0].id] : FACTORIES.map(f=>f.id));
+let activeBrands = new Set(BRANDS.map(b=>b.code));
+
+function fmt(n){ return n===0?'—':n.toLocaleString(); }
+function isFuture(fid,yr,mi){ return yr===2026 && (RAW[fid]?.approved[2026]?.[mi]||0)===0 && mi>=4; }
+
+// ── Brand weighting — lets the Brand filter change orders/totals ───
+const _brandWeightCache = {};
+function factoryBrandWeights(fid){
+  if(_brandWeightCache[fid]) return _brandWeightCache[fid];
+  const items = IDV_DATA[fid]||[];
+  const total = items.reduce((s,i)=>s+i.qty,0);
+  const w = {};
+  items.forEach(it=>{ w[it.brand] = (w[it.brand]||0) + it.qty; });
+  Object.keys(w).forEach(k=>{ w[k] = total ? w[k]/total : 0; });
+  _brandWeightCache[fid] = w;
+  return w;
+}
+function brandFraction(fid){
+  if(activeBrands.size === BRANDS.length) return 1; // no filter applied
+  const w = factoryBrandWeights(fid);
+  let frac = 0;
+  Object.keys(w).forEach(code=>{ if(activeBrands.has(code)) frac += w[code]; });
+  return frac;
+}
+function filterItemsByBrand(items){
+  if(activeBrands.size === BRANDS.length) return items;
+  return items.filter(it=>activeBrands.has(it.brand));
+}
+
+let viewMode = 'units'; // 'units' | 'idv'
+
+// Distributes a month's (or full year's, when mi===null) raw unit total across
+// a factory's item catalog using each item's relative historical qty as weight,
+// so per-item qty always sums back to the known monthly/yearly total.
+// The brand filter scales the total down to just the selected brand(s)' share.
+function baseRawVal(fid, metric, yr, mi){
+  if(mi===null) return (RAW[fid][metric][yr]||[]).reduce((s,v)=>s+v,0);
+  return RAW[fid][metric][yr]?.[mi] || 0;
+}
+
+function rawVal(fid, metric, yr, mi){
+  return baseRawVal(fid, metric, yr, mi) * brandFraction(fid);
+}
+
+function computeBreakdown(fid, metric, yr, mi){
+  const items = filterItemsByBrand(IDV_DATA[fid]||[]);
+  const total = Math.round(rawVal(fid, metric, yr, mi));
+  if(!items.length || !total) return {items:[], total:0, idvTotal:0};
+  const sumQty = items.reduce((s,i)=>s+i.qty,0);
+  const allocated = items.map(it=>({...it, raw: total*it.qty/sumQty}));
+  let floorSum = 0;
+  allocated.forEach(a=>{ a.qty = Math.floor(a.raw); floorSum += a.qty; });
+  let remainder = total - floorSum;
+  const byRemainder = allocated.slice().sort((a,b)=>(b.raw-Math.floor(b.raw))-(a.raw-Math.floor(a.raw)));
+  for(let i=0;i<remainder;i++){ byRemainder[i%byRemainder.length].qty++; }
+  const idvTotal = allocated.reduce((s,a)=>s+a.qty*a.idv,0);
+  return {items:allocated, total, idvTotal};
+}
+
+function displayVal(fid, metric, yr, mi){
+  if(viewMode==='units') return rawVal(fid, metric, yr, mi);
+  return computeBreakdown(fid, metric, yr, mi).idvTotal;
+}
+
+function fmtDisplay(v){
+  if(viewMode==='units'){
+    const r = Math.round(v);
+    return r===0 ? '—' : r.toLocaleString();
+  }
+  if(!v) return '—';
+  return v.toLocaleString(undefined,{minimumFractionDigits:1,maximumFractionDigits:1});
+}
+
+function tdCell(fid, metric, yr, mi, curYr, divl){
+  const raw = rawVal(fid, metric, yr, mi);
+  const isCur = yr===curYr;
+  const isFuture = yr===2026 && mi>=4 && baseRawVal(fid, metric, yr, mi)===0;
+  const blank = Math.round(raw)===0; // covers future-blank months and brand filters with no matching share
+  const clickable = !blank;
+  const text = blank ? '—' : fmtDisplay(displayVal(fid, metric, yr, mi));
+  const cls = `${divl?'divl ':''} ${isCur&&!isFuture?'cur':'prev'}${clickable?' cell-link':''}`;
+  const click = clickable ? ` onclick="openIDVModal('${fid}',{mode:'month',metric:'${metric}',yr:${yr},mi:${mi}})" title="View item breakdown"` : '';
+  return `<td class="${cls}"${click}>${text}</td>`;
+}
+
+function tdTotalCell(fid, metric, yr, curYr, divl){
+  const raw = rawVal(fid, metric, yr, null);
+  const isCur = yr===curYr;
+  const clickable = Math.round(raw)>0;
+  const text = fmtDisplay(displayVal(fid, metric, yr, null));
+  const cls = `${divl?'divl ':''} ${isCur?'cur':'prev'}${clickable?' cell-link':''}`;
+  const click = clickable ? ` onclick="openIDVModal('${fid}',{mode:'month',metric:'${metric}',yr:${yr},mi:null})" title="View full-year item breakdown"` : '';
+  return `<td class="${cls}"${click}>${text}</td>`;
+}
+
+
+function buildKPI(){
+  const strip = document.getElementById('kpiStrip');
+  const cols = Math.min(activeFactories.size, 7);
+  strip.style.gridTemplateColumns = `repeat(${cols}, minmax(0,1fr))`;
+  const ytd=4;
+  strip.innerHTML = FACTORIES.filter(f=>activeFactories.has(f.id)).map(f=>{
+    const v26 = Math.round([0,1,2,3].reduce((s,mi)=>s+rawVal(f.id,'approved',2026,mi),0));
+    const v25 = Math.round([0,1,2,3].reduce((s,mi)=>s+rawVal(f.id,'approved',2025,mi),0));
+    const d = v25?Math.round((v26-v25)/v25*100):0;
+    const dc = d>=0?'#3B6D11':'#A32D2D';
+    const short = f.code ? `${f.id.toUpperCase()} (${f.code})` : f.id.toUpperCase();
+    return `<div class="metric">
+      <div class="metric-lbl" style="color:${f.textColor}">${short}</div>
+      <div class="metric-val">${v26.toLocaleString()}</div>
+      <div class="metric-d" style="color:${dc}">${d>=0?'↑':'↓'} ${Math.abs(d)}% vs 2025</div>
+    </div>`;
+  }).join('');
+}
+
+function buildTable(){
+  const years = Array.from(activeYears).sort();
+  const curYr = years[years.length-1];
+  const prevYr = years.length>1?years[years.length-2]:null;
+  const visF = FACTORIES.filter(f=>activeFactories.has(f.id));
+  const showTotals = visF.length > 1;
+
+  let h = '<thead>';
+
+  h += `<tr><th class="th-cat" style="text-align:left;padding-left:14px;background:#F9FAFB;color:#6B7280">Month</th>`;
+  visF.forEach(f=>{
+    h += `<th class="th-cat divl" colspan="${years.length*2}" style="background:${f.bg};color:${f.textColor};border-bottom:none;box-shadow:inset 0 -2px 0 0 ${f.border}"><span style="display:inline-flex;align-items:center;justify-content:center;gap:4px;white-space:nowrap">${f.fullName}<button class="idv-btn" style="color:${f.textColor}" onclick="openIDVModal('${f.id}');event.stopPropagation()" title="View Item Difficulty Values"><svg viewBox="0 0 14 11" fill="none"><path d="M1 1.5h8M1 5h5.5M1 8.5h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="11" cy="8" r="2.4" stroke="currentColor" stroke-width="1.3"/><path d="M12.7 9.7l1.1 1.1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button></span></th>`;
+  });
+  if(showTotals) h += `<th class="th-cat divl" colspan="${years.length*2}" style="background:${TOTALS_COLOR.bg};color:${TOTALS_COLOR.text};border-bottom:none;box-shadow:inset 0 -2px 0 0 ${TOTALS_COLOR.border}">Totals</th>`;
+  h += '</tr><tr>';
+  h += `<th class="th-sub" style="text-align:left;padding-left:14px;background:#F9FAFB"></th>`;
+  visF.forEach(f=>{
+    h += `<th class="th-sub divl" colspan="${years.length}" style="background:${f.bg};color:${f.textColor}">Approved</th>`;
+    h += `<th class="th-sub" colspan="${years.length}" style="background:${f.bg};color:${f.textColor};">Shipped</th>`;
+  });
+  if(showTotals){
+    h += `<th class="th-sub divl" colspan="${years.length}" style="background:${TOTALS_COLOR.bg};color:${TOTALS_COLOR.text}">Approved</th>`;
+    h += `<th class="th-sub" colspan="${years.length}" style="background:${TOTALS_COLOR.bg};color:${TOTALS_COLOR.text}">Shipped</th>`;
+  }
+  h += '</tr><tr>';
+  h += `<th class="th-mo"></th>`;
+  visF.forEach(f=>{
+    years.forEach((yr,yi)=>{ h+=`<th class="${yi===0?'divl ':''} th-yr${yr===curYr?' cur':''}" style="${yr===curYr?'background:'+f.bg+';color:'+f.textColor:''}">${yr}</th>`; });
+    years.forEach(yr=>{ h+=`<th class="th-yr${yr===curYr?' cur':''}" style="${yr===curYr?'background:'+f.bg+';color:'+f.textColor:''}">${yr}</th>`; });
+  });
+  if(showTotals){
+    years.forEach((yr,yi)=>{ h+=`<th class="${yi===0?'divl ':''} th-yr${yr===curYr?' cur':''}" style="${yr===curYr?'background:'+TOTALS_COLOR.bg+';color:'+TOTALS_COLOR.text:''}">${yr}</th>`; });
+    years.forEach(yr=>{ h+=`<th class="th-yr${yr===curYr?' cur':''}" style="${yr===curYr?'background:'+TOTALS_COLOR.bg+';color:'+TOTALS_COLOR.text:''}">${yr}</th>`; });
+  }
+  h += '</tr></thead><tbody>';
+
+  MONTHS.forEach((month,mi)=>{
+    h += `<tr><td class="mo">${month}</td>`;
+    visF.forEach(f=>{
+      years.forEach((yr,yi)=>{ h+=tdCell(f.id,'approved',yr,mi,curYr,yi===0); });
+      years.forEach(yr=>{ h+=tdCell(f.id,'shipped',yr,mi,curYr,false); });
+    });
+    if(showTotals){
+      years.forEach((yr,yi)=>{
+        const tot=visF.reduce((s,f)=>s+displayVal(f.id,'approved',yr,mi),0);
+        const isCur=yr===curYr; const isZ=isCur&&tot===0&&yr===2026&&mi>=4;
+        h+=`<td class="tot${isCur?' cur':''} ${yi===0?'divl':''}">${isZ?'—':fmtDisplay(tot)}</td>`;
+      });
+      years.forEach(yr=>{
+        const tot=visF.reduce((s,f)=>s+displayVal(f.id,'shipped',yr,mi),0);
+        const isCur=yr===curYr; const isZ=isCur&&tot===0&&yr===2026&&mi>=4;
+        h+=`<td class="tot${isCur?' cur':''}">${isZ?'—':fmtDisplay(tot)}</td>`;
+      });
+    }
+    h += '</tr>';
+  });
+
+  h += `<tr class="total-row"><td class="mo" style="color:#1B1F2E">Totals</td>`;
+  visF.forEach(f=>{
+    years.forEach((yr,yi)=>{ h+=tdTotalCell(f.id,'approved',yr,curYr,yi===0); });
+    years.forEach(yr=>{ h+=tdTotalCell(f.id,'shipped',yr,curYr,false); });
+  });
+  if(showTotals){
+    years.forEach((yr,yi)=>{ const t=visF.reduce((s,f)=>s+displayVal(f.id,'approved',yr,null),0); h+=`<td class="tot${yr===curYr?' cur':''} ${yi===0?'divl':''}">${fmtDisplay(t)}</td>`; });
+    years.forEach(yr=>{ const t=visF.reduce((s,f)=>s+displayVal(f.id,'shipped',yr,null),0); h+=`<td class="tot${yr===curYr?' cur':''}">${fmtDisplay(t)}</td>`; });
+  }
+  h += '</tr></tbody>';
+  document.getElementById('mainTable').innerHTML=h;
+
+  const years2=Array.from(activeYears).sort();
+  document.getElementById('activeBadge').textContent=years2.length===1?String(years2[0]):years2.join(' vs ');
+  document.getElementById('tbarTitle').textContent = viewMode==='units'
+    ? 'Unit output'
+    : 'Item Difficulty Value output';
+}
+
+function applyTotalsSticky(){
+  requestAnimationFrame(()=>{
+    const table = document.getElementById('mainTable');
+    if(!table) return;
+
+    // Count tot columns from a data row
+    const firstData = table.querySelector('tbody tr');
+    if(!firstData) return;
+    const dataCells = Array.from(firstData.cells);
+    let totCount = 0;
+    for(let i=dataCells.length-1;i>=0;i--){
+      if(dataCells[i].classList.contains('tot')) totCount++;
+      else break;
+    }
+    if(!totCount) return;
+
+    // Measure individual column widths from the data row
+    const totDataCells = dataCells.slice(-totCount);
+    const colWidths = totDataCells.map(c=>c.offsetWidth);
+
+    // Cumulative right offsets (right-to-left)
+    const rights = new Array(totCount).fill(0);
+    let cum = 0;
+    for(let i=totCount-1;i>=0;i--){ rights[i]=cum; cum+=colWidths[i]; }
+
+    // Apply to tbody rows
+    table.querySelectorAll('tbody tr').forEach(row=>{
+      const cells = Array.from(row.cells);
+      cells.slice(-totCount).forEach((cell,i)=>{
+        cell.style.position='sticky';
+        cell.style.right=rights[i]+'px';
+        cell.style.zIndex='2';
+      });
+    });
+
+    // Apply to thead rows (cells may have colspan)
+    table.querySelectorAll('thead tr').forEach(row=>{
+      const cells = Array.from(row.cells);
+      let rem = totCount;
+      const hdrCells = [];
+      for(let i=cells.length-1;i>=0&&rem>0;i--){
+        hdrCells.unshift(cells[i]);
+        rem-=(cells[i].colSpan||1);
+      }
+      let cumHdr=0;
+      for(let i=hdrCells.length-1;i>=0;i--){
+        hdrCells[i].style.position='sticky';
+        hdrCells[i].style.right=cumHdr+'px';
+        hdrCells[i].style.zIndex='3';
+        cumHdr+=hdrCells[i].offsetWidth;
+      }
+    });
+  });
+}
+
+function refreshAll(){ buildKPI(); buildTable(); applyTotalsSticky(); }
+
+// ── View toggle (Units / Item Difficulty Value) ─────────────────
+document.querySelectorAll('#viewSeg .seg-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    if(btn.dataset.mode===viewMode) return;
+    viewMode = btn.dataset.mode;
+    document.querySelectorAll('#viewSeg .seg-btn').forEach(b=>b.classList.toggle('on', b===btn));
+    refreshAll();
+  });
+});
+
+// ── Year dropdown ──────────────────────────────────────────────
+const YEARS_ALL = [2021,2022,2023,2024,2025,2026];
+const yrBtn    = document.getElementById('yrBtn');
+const yrPanel  = document.getElementById('yrPanel');
+const yrSearch = document.getElementById('yrSearch');
+const yrBtnText= document.getElementById('yrBtnText');
+
+function updateYrBtn(){
+  const sel = Array.from(activeYears).sort();
+  yrBtnText.textContent = sel.length === YEARS_ALL.length ? 'All years' : sel.join(', ');
+}
+
+function openYrDropdown(){ yrPanel.classList.add('open'); yrBtn.classList.add('open'); yrSearch.focus(); }
+function closeYrDropdown(){ yrPanel.classList.remove('open'); yrBtn.classList.remove('open'); }
+
+yrBtn.addEventListener('click', e=>{ e.stopPropagation(); yrPanel.classList.contains('open')?closeYrDropdown():openYrDropdown(); });
+document.addEventListener('click', e=>{ if(!document.getElementById('yrDd').contains(e.target)) closeYrDropdown(); });
+
+yrSearch.addEventListener('input', ()=>{
+  const q = yrSearch.value.trim();
+  document.querySelectorAll('#yrPanel .dd-opt[data-yr]').forEach(o=>{
+    o.classList.toggle('hidden', q && !o.dataset.yr.includes(q));
+  });
+});
+
+document.getElementById('yrOptAny').addEventListener('click', ()=>{
+  YEARS_ALL.forEach(yr=>activeYears.add(yr));
+  document.querySelectorAll('#yrPanel .dd-opt[data-yr]').forEach(o=>o.classList.add('on'));
+  updateYrBtn(); refreshAll();
+});
+
+document.querySelectorAll('#yrPanel .dd-opt[data-yr]').forEach(opt=>{
+  opt.addEventListener('click', ()=>{
+    const yr = parseInt(opt.dataset.yr);
+    if(activeYears.has(yr)){
+      if(activeYears.size === 1) return;
+      activeYears.delete(yr); opt.classList.remove('on');
+    } else {
+      activeYears.add(yr); opt.classList.add('on');
+    }
+    updateYrBtn(); refreshAll();
+  });
+});
+
+// ── Factory dropdown ───────────────────────────────────────────
+const facBtn    = document.getElementById('facBtn');
+const facPanel  = document.getElementById('facPanel');
+const facSearch = document.getElementById('facSearch');
+const facBtnText= document.getElementById('facBtnText');
+const facOptsEl = document.getElementById('facOpts');
+
+function updateFacBtn(){
+  const sel = FACTORIES.filter(f=>activeFactories.has(f.id));
+  facBtnText.textContent = sel.length === FACTORIES.length ? 'All factories' : sel.map(f=>f.id.toUpperCase()).join(', ');
+}
+
+function openFacDropdown(){ facPanel.classList.add('open'); facBtn.classList.add('open'); facSearch.focus(); }
+function closeFacDropdown(){ facPanel.classList.remove('open'); facBtn.classList.remove('open'); }
+
+facBtn.addEventListener('click', e=>{ e.stopPropagation(); facPanel.classList.contains('open')?closeFacDropdown():openFacDropdown(); });
+document.addEventListener('click', e=>{ if(!document.getElementById('facDd').contains(e.target)) closeFacDropdown(); });
+
+facSearch.addEventListener('input', ()=>{
+  const q = facSearch.value.trim().toLowerCase();
+  facOptsEl.querySelectorAll('.fac-dd-row').forEach(r=>{
+    r.classList.toggle('hidden', q && !r.dataset.fac.includes(q) && !r.querySelector('.fac-dd-name').textContent.toLowerCase().includes(q));
+  });
+});
+
+document.getElementById('facOptAny').addEventListener('click', ()=>{
+  FACTORIES.forEach(f=>activeFactories.add(f.id));
+  facOptsEl.querySelectorAll('.fac-dd-row').forEach(r=>{
+    const f = FACTORIES.find(x=>x.id===r.dataset.fac);
+    r.classList.add('checked');
+    r.querySelector('.fac-cb-box').style.background = f.color;
+  });
+  updateFacBtn(); refreshAll();
+});
+
+facOptsEl.innerHTML = FACTORIES.map(f=>`
+  <div class="fac-dd-row checked" data-fac="${f.id}">
+    <span class="fac-cb-box" style="border-color:${f.color};background:${f.color}">
+      <svg class="fac-cb-chk" viewBox="0 0 8 8" fill="none"><path d="M1 4l2.2 2.2L7 1.5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+    <span class="fac-dd-name">${f.fullName}</span>
+  </div>`).join('');
+
+facOptsEl.querySelectorAll('.fac-dd-row').forEach(row=>{
+  const fid = row.dataset.fac;
+  const f   = FACTORIES.find(x=>x.id===fid);
+  const box = row.querySelector('.fac-cb-box');
+  row.addEventListener('click', ()=>{
+    if(activeFactories.has(fid)){
+      if(activeFactories.size === 1) return;
+      activeFactories.delete(fid);
+      row.classList.remove('checked');
+      box.style.background = 'transparent';
+    } else {
+      activeFactories.add(fid);
+      row.classList.add('checked');
+      box.style.background = f.color;
+    }
+    updateFacBtn(); refreshAll();
+  });
+});
+
+// ── Brand switcher (topbar) — single-select: QUICKSTRIKE = all brands ──
+const brandTopBtn    = document.getElementById('brandTopBtn');
+const brandTopPanel  = document.getElementById('brandTopPanel');
+const brandTopSearch = document.getElementById('brandTopSearch');
+const brandTopName   = document.getElementById('brandTopName');
+const brandTopAllEl  = document.getElementById('brandTopAll');
+const brandTopOptsEl = document.getElementById('brandTopOpts');
+
+function openBrandTopDropdown(){ brandTopPanel.classList.add('open'); brandTopBtn.classList.add('open'); brandTopSearch.focus(); }
+function closeBrandTopDropdown(){ brandTopPanel.classList.remove('open'); brandTopBtn.classList.remove('open'); }
+
+brandTopBtn.addEventListener('click', e=>{ e.stopPropagation(); brandTopPanel.classList.contains('open')?closeBrandTopDropdown():openBrandTopDropdown(); });
+document.addEventListener('click', e=>{ if(!document.getElementById('brandTopDd').contains(e.target)) closeBrandTopDropdown(); });
+
+brandTopSearch.addEventListener('input', ()=>{
+  const q = brandTopSearch.value.trim().toLowerCase();
+  brandTopOptsEl.querySelectorAll('.dd-opt').forEach(o=>{
+    o.classList.toggle('hidden', q && !o.textContent.toLowerCase().includes(q));
+  });
+});
+
+function selectBrand(code){
+  if(code==='__ALL__'){
+    activeBrands = new Set(BRANDS.map(b=>b.code));
+    brandTopName.textContent = 'QUICKSTRIKE';
+  } else {
+    activeBrands = new Set([code]);
+    const b = BRANDS.find(x=>x.code===code);
+    brandTopName.textContent = b.name;
+  }
+  brandTopAllEl.classList.toggle('on', code==='__ALL__');
+  brandTopOptsEl.querySelectorAll('.dd-opt').forEach(o=>o.classList.toggle('on', o.dataset.brand===code));
+  closeBrandTopDropdown();
+  refreshAll();
+}
+
+brandTopAllEl.addEventListener('click', ()=>selectBrand('__ALL__'));
+brandTopOptsEl.innerHTML = BRANDS.map(b=>`<div class="dd-opt" data-brand="${b.code}">${b.code} — ${b.name}</div>`).join('');
+brandTopOptsEl.querySelectorAll('.dd-opt').forEach(o=>{
+  o.addEventListener('click', ()=>selectBrand(o.dataset.brand));
+});
+
+// ── Sidebar drawer (mobile) ─────────────────────────────────────
+const sidebarEl       = document.getElementById('sidebarEl');
+const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+const sidebarToggleBtn= document.getElementById('sidebarToggleBtn');
+sidebarToggleBtn.addEventListener('click', ()=>{
+  sidebarEl.classList.toggle('open');
+  sidebarBackdrop.classList.toggle('open');
+});
+sidebarBackdrop.addEventListener('click', ()=>{
+  sidebarEl.classList.remove('open');
+  sidebarBackdrop.classList.remove('open');
+});
+
+// If we defaulted to a narrowed single-year/single-factory view for a small
+// screen, reflect that in the Year/Factory dropdowns too (they're otherwise
+// rendered assuming the full desktop default).
+if(IS_NARROW_VIEWPORT){
+  document.querySelectorAll('#yrPanel .dd-opt[data-yr]').forEach(o=>{
+    o.classList.toggle('on', activeYears.has(parseInt(o.dataset.yr)));
+  });
+  updateYrBtn();
+
+  facOptsEl.querySelectorAll('.fac-dd-row').forEach(row=>{
+    const on = activeFactories.has(row.dataset.fac);
+    const f  = FACTORIES.find(x=>x.id===row.dataset.fac);
+    row.classList.toggle('checked', on);
+    row.querySelector('.fac-cb-box').style.background = on ? f.color : 'transparent';
+  });
+  updateFacBtn();
+}
+
+refreshAll();
+
+// ── IDV Modal ──────────────────────────────────────────────────
+function idvColor(v){
+  const stops=[[34,197,94],[132,204,22],[234,179,8],[249,115,22],[239,68,68]];
+  const t=Math.max(0,Math.min(1,(v-1)/4));
+  const i=Math.min(3,Math.floor(t*4));
+  const f=t*4-i;
+  const lo=stops[i],hi=stops[Math.min(4,i+1)];
+  return `rgb(${Math.round(lo[0]+(hi[0]-lo[0])*f)},${Math.round(lo[1]+(hi[1]-lo[1])*f)},${Math.round(lo[2]+(hi[2]-lo[2])*f)})`;
+}
+
+function openIDVModal(fid, opts){
+  opts = opts || {mode:'catalog'};
+  const f = FACTORIES.find(x=>x.id===fid);
+  let items, title, subtitle;
+
+  if(opts.mode==='month'){
+    const bd = computeBreakdown(fid, opts.metric, opts.yr, opts.mi);
+    items = bd.items;
+    const metricLbl = opts.metric==='approved' ? 'Approved' : 'Shipped';
+    const periodLbl = opts.mi===null ? `${opts.yr} — Full Year` : `${MONTHS[opts.mi]} ${opts.yr}`;
+    title = `${f.fullName} — ${periodLbl}`;
+    subtitle = `${metricLbl} breakdown — ${items.length} items — ${bd.total.toLocaleString()} units`;
+  } else {
+    items = IDV_DATA[fid]||[];
+    title = f.fullName;
+    subtitle = items.length+' items — Item Difficulty Values';
+  }
+
+  document.getElementById('idvModalTitle').textContent = title;
+  document.getElementById('idvModalSub').textContent = subtitle;
+  document.getElementById('idvModalAccent').style.background = f.color;
+  const tbody = document.getElementById('idvTableBody');
+  const idvGrandTotal = items.reduce((s,i)=>s+i.qty*i.idv,0);
+  tbody.innerHTML = items.map(item=>{
+    const col = idvColor(item.idv);
+    const rowTotal = item.qty*item.idv;
+    const pct = idvGrandTotal ? (rowTotal/idvGrandTotal*100).toFixed(1) : '0.0';
+    return `<tr>
+      <td style="font-weight:600;color:#1B1F2E;max-width:280px;white-space:normal">${item.item}</td>
+      <td style="color:#374151;font-size:11px;font-weight:600;font-family:ui-monospace,monospace">${item.sport}</td>
+      <td style="color:#374151;font-size:11px;font-weight:600;font-family:ui-monospace,monospace">${item.brand}</td>
+      <td style="font-size:13px;font-weight:700;color:${col};letter-spacing:-.01em">${item.idv.toFixed(2)}</td>
+      <td style="font-weight:600;color:#1B1F2E">${Math.round(item.qty).toLocaleString()}</td>
+      <td style="font-weight:600;color:#1B1F2E">${rowTotal.toLocaleString(undefined,{maximumFractionDigits:1})}</td>
+      <td><span style="font-weight:700;color:#1B1F2E">${pct}</span><span style="font-size:10px;color:#9CA3AF">%</span></td>
+    </tr>`;
+  }).join('');
+  document.getElementById('idvModal').classList.add('open');
+}
+
+function closeIDVModal(e){
+  if(e && !e.target.classList.contains('modal-overlay')) return;
+  document.getElementById('idvModal').classList.remove('open');
+}
+
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') document.getElementById('idvModal').classList.remove('open'); });
+</script>
+
+<div class="modal-overlay" id="idvModal" onclick="closeIDVModal(event)">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <div>
+        <div class="modal-title" id="idvModalTitle"></div>
+        <div class="modal-sub" id="idvModalSub"></div>
+      </div>
+      <button class="modal-close" onclick="document.getElementById('idvModal').classList.remove('open')">
+        <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1 1l9 9M10 1L1 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div id="idvModalAccent" style="height:3px;flex-shrink:0"></div>
+    <div class="modal-body">
+      <table class="idv-tbl">
+        <thead><tr><th>Old Master Block Name</th><th>Sport</th><th>Brand</th><th>IDV</th><th>Quantity</th><th>IDV Total</th><th>%</th></tr></thead>
+        <tbody id="idvTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
