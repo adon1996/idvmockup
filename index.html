@@ -32,6 +32,9 @@ body{font-family:var(--font-sans,-apple-system,'Inter',ui-sans-serif,sans-serif)
 .content{flex:1;overflow:auto;padding:18px 22px;display:flex;flex-direction:column;gap:14px}
 
 /* KPI strip */
+.kpi-section-hdr{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.kpi-section-title{font-size:12px;font-weight:700;color:#1B1F2E}
+.kpi-section-sub{font-size:11px;color:#9CA3AF}
 .kpi-strip{display:grid;gap:12px}
 .metric{background:#fff;border-radius:12px;padding:14px 16px;border:1px solid #E9EAEF;transition:opacity .15s;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
 .metric.dimmed{opacity:.35}
@@ -299,6 +302,10 @@ td.cell-link:hover{text-decoration:underline}
   </div>
 
   <div class="content">
+    <div class="kpi-section-hdr">
+      <span class="kpi-section-title">Year-over-Year Snapshot</span>
+      <span class="kpi-section-sub">Jan–Apr, current year vs. prior year — fixed comparison, independent of the Years/Factories filters below</span>
+    </div>
     <div class="kpi-strip" id="kpiStrip"></div>
 
     <div class="table-card">
@@ -529,8 +536,8 @@ const IDV_DATA = {
     {item:'Ace Jersey, Scooped V-Neck, Cap Sleeve, Women and Youth',  sport:'VB',  brand:'RDL',  lineGroup:'', idv:1.25, qty:680},
     {item:'Ace Jersey, Scooped V-Neck, Long Sleeve, Women and Youth', sport:'VB',  brand:'NWB',  lineGroup:'', idv:1.25, qty:590},
     {item:'Ace Jersey, Scooped V-Neck, Short Sleeve, Women and Youth',sport:'VB',  brand:'PLS',  lineGroup:'', idv:1.25, qty:720},
-    {item:'Cinch Sack, Unisex',                                       sport:'APP', brand:'RDL',  lineGroup:'', idv:0.75, qty:2100},
-    {item:'Champion Jersey, Men and Youth',                           sport:'SCR', brand:'NWB',  lineGroup:'', idv:1.0,  qty:1300},
+    {item:'Cinch Sack, Unisex',                                       sport:'APP', brand:['RDL','ALLI'], lineGroup:'', idv:0.75, qty:2100},
+    {item:'Champion Jersey, Men and Youth',                           sport:['SCR','FB'], brand:'NWB',  lineGroup:'', idv:1.0,  qty:1300},
     {item:'Champion Jersey, Women',                                   sport:'SCR', brand:'PLS',  lineGroup:'', idv:1.0,  qty:900},
     {item:'Champion Short, Men and Youth',                            sport:'SCR', brand:'RDL',  lineGroup:'', idv:1.0,  qty:1150},
     {item:'Champion Short, Women',                                    sport:'SCR', brand:'NWB',  lineGroup:'', idv:1.0,  qty:780},
@@ -548,7 +555,7 @@ const IDV_DATA = {
     {item:'Athletic Jersey S/S',        sport:'FB',  brand:'PLS',  lineGroup:'', idv:2.8, qty:3200},
     {item:'Athletic Jersey L/S',        sport:'FB',  brand:'DSG',  lineGroup:'', idv:3.2, qty:2100},
     {item:'Basketball Shorts',          sport:'BB',  brand:'STK',  lineGroup:'', idv:1.9, qty:4500},
-    {item:'Track Pants',                sport:'APP', brand:'PLS',  lineGroup:'', idv:2.4, qty:1800},
+    {item:'Track Pants',                sport:'APP', brand:['PLS','DSG'], lineGroup:'', idv:2.4, qty:1800},
     {item:'Training Jacket',            sport:'APP', brand:'DSG',  lineGroup:'', idv:4.2, qty:900},
     {item:'Alli Tech Tee',              sport:'APP', brand:'ALLI', lineGroup:'', idv:1.0, qty:2600},
     {item:'Alli Track Jacket',          sport:'APP', brand:'ALLI', lineGroup:'', idv:3.0, qty:700},
@@ -563,7 +570,7 @@ const IDV_DATA = {
     {item:'Twill Shorts',               sport:'APP', brand:'LGN',  lineGroup:'', idv:2.3, qty:3400},
     {item:'Twill Pants',                sport:'APP', brand:'PLS',  lineGroup:'', idv:2.8, qty:2200},
     {item:'Twill Hoodie',               sport:'APP', brand:'RVL',  lineGroup:'', idv:4.5, qty:750},
-    {item:'Embroidered Cap',            sport:'APP', brand:'LGN',  lineGroup:'', idv:3.1, qty:1900},
+    {item:'Embroidered Cap',            sport:['APP','BB'], brand:'LGN',  lineGroup:'', idv:3.1, qty:1900},
     {item:'Alli Twill Polo',            sport:'APP', brand:'ALLI', lineGroup:'', idv:2.6, qty:1300},
     {item:'Alli Embroidered Beanie',    sport:'APP', brand:'ALLI', lineGroup:'', idv:1.8, qty:900},
     {item:'AXE Twill Jacket',           sport:'APP', brand:'AXE',  lineGroup:'', idv:4.2, qty:620},
@@ -575,7 +582,7 @@ const IDV_DATA = {
     {item:'Performance Jersey',         sport:'FB',  brand:'PLS',  lineGroup:'', idv:2.6, qty:5100},
     {item:'Training Shirt',             sport:'APP', brand:'VIC',  lineGroup:'', idv:2.1, qty:3800},
     {item:'Athletic Shorts',            sport:'APP', brand:'QXT',  lineGroup:'', idv:1.8, qty:6200},
-    {item:'Compression Leggings',       sport:'WR',  brand:'PLS',  lineGroup:'', idv:3.0, qty:2400},
+    {item:'Compression Leggings',       sport:['WR','APP'], brand:'PLS',  lineGroup:'', idv:3.0, qty:2400},
     {item:'Alli Performance Shirt',     sport:'APP', brand:'ALLI', lineGroup:'', idv:2.0, qty:3200},
     {item:'Alli Compression Short',     sport:'WR',  brand:'ALLI', lineGroup:'', idv:1.9, qty:2800},
     {item:'AXE Training Jersey',        sport:'FB',  brand:'AXE',  lineGroup:'', idv:2.7, qty:2100},
@@ -588,7 +595,7 @@ const IDV_DATA = {
     {item:'Ankle Socks',                sport:'APP', brand:'NWB',  lineGroup:'', idv:1.7, qty:12600},
     {item:'Quarter Socks',              sport:'APP', brand:'RSN',  lineGroup:'', idv:1.9, qty:9800},
     {item:'No-Show Socks',              sport:'APP', brand:'PLS',  lineGroup:'', idv:1.5, qty:7200},
-    {item:'Crew Socks',                 sport:'APP', brand:'NWB',  lineGroup:'', idv:2.1, qty:11000},
+    {item:'Crew Socks',                 sport:'APP', brand:['NWB','PLS'], lineGroup:'', idv:2.1, qty:11000},
     {item:'Compression Socks',          sport:'WR',  brand:'RSN',  lineGroup:'', idv:3.3, qty:3600},
     {item:'Alli Ankle Sock',            sport:'APP', brand:'ALLI', lineGroup:'', idv:1.6, qty:9200},
     {item:'Alli Crew Sock',             sport:'APP', brand:'ALLI', lineGroup:'', idv:2.0, qty:7100},
@@ -600,7 +607,7 @@ const IDV_DATA = {
   svn:[
     {item:'Premium Jersey S/S',         sport:'FB',  brand:'PLS',  lineGroup:'', idv:3.7, qty:1800},
     {item:'Premium Jersey L/S',         sport:'FB',  brand:'RDL',  lineGroup:'', idv:4.2, qty:1200},
-    {item:'Premium Shorts',             sport:'APP', brand:'DSG',  lineGroup:'', idv:2.6, qty:2400},
+    {item:'Premium Shorts',             sport:['APP','FB'], brand:'DSG',  lineGroup:'', idv:2.6, qty:2400},
     {item:'Premium Track Jacket',       sport:'APP', brand:'PLS',  lineGroup:'', idv:4.8, qty:600},
     {item:'Premium Hoodie',             sport:'APP', brand:'RDL',  lineGroup:'', idv:4.5, qty:900},
     {item:'Alli Premium Tee',           sport:'APP', brand:'ALLI', lineGroup:'', idv:2.4, qty:1400},
@@ -614,7 +621,7 @@ const IDV_DATA = {
     {item:'Sublimated Jersey S/S',      sport:'FB',  brand:'PLS',  lineGroup:'', idv:3.1, qty:4200},
     {item:'Sublimated Jersey L/S',      sport:'FB',  brand:'STK',  lineGroup:'', idv:3.6, qty:2800},
     {item:'Sublimated Shorts',          sport:'APP', brand:'RVL',  lineGroup:'', idv:2.2, qty:5600},
-    {item:'Sublimated Warm-Up',         sport:'APP', brand:'PLS',  lineGroup:'', idv:4.3, qty:1400},
+    {item:'Sublimated Warm-Up',         sport:'APP', brand:['PLS','STK'], lineGroup:'', idv:4.3, qty:1400},
     {item:'Sublimated Cap',             sport:'APP', brand:'STK',  lineGroup:'', idv:2.7, qty:3100},
     {item:'Alli Sublimated Tee',        sport:'APP', brand:'ALLI', lineGroup:'', idv:2.0, qty:3600},
     {item:'Alli Sublimated Short',      sport:'APP', brand:'ALLI', lineGroup:'', idv:2.4, qty:2900},
@@ -664,6 +671,13 @@ let activeBrands = new Set(BRANDS.map(b=>b.code));
 function fmt(n){ return n===0?'—':n.toLocaleString(); }
 function isFuture(fid,yr,mi){ return yr===2026 && (RAW[fid]?.approved[2026]?.[mi]||0)===0 && mi>=4; }
 
+// Some items (blanks, shared programs) belong to more than one brand or sport
+// at once — brand/sport fields can be a single code or an array of codes.
+function asList(v){ return Array.isArray(v) ? v : [v]; }
+
+const SPORT_NAMES = { APP:'Apparel', BB:'Basketball', FB:'Football', SCR:'Soccer', VB:'Volleyball', WR:'Wrestling' };
+function sportName(code){ return SPORT_NAMES[code] || code; }
+
 // ── Brand weighting — lets the Brand filter change orders/totals ───
 const _brandWeightCache = {};
 function factoryBrandWeights(fid){
@@ -671,7 +685,9 @@ function factoryBrandWeights(fid){
   const items = IDV_DATA[fid]||[];
   const total = items.reduce((s,i)=>s+i.qty,0);
   const w = {};
-  items.forEach(it=>{ w[it.brand] = (w[it.brand]||0) + it.qty; });
+  // An item shared across brands contributes its full qty to each of those
+  // brands' totals (not split) — each brand is fully entitled to see it.
+  items.forEach(it=>{ asList(it.brand).forEach(b=>{ w[b] = (w[b]||0) + it.qty; }); });
   Object.keys(w).forEach(k=>{ w[k] = total ? w[k]/total : 0; });
   _brandWeightCache[fid] = w;
   return w;
@@ -685,7 +701,7 @@ function brandFraction(fid){
 }
 function filterItemsByBrand(items){
   if(activeBrands.size === BRANDS.length) return items;
-  return items.filter(it=>activeBrands.has(it.brand));
+  return items.filter(it=>asList(it.brand).some(b=>activeBrands.has(b)));
 }
 
 let viewMode = 'units'; // 'units' | 'idv'
@@ -759,16 +775,17 @@ function buildKPI(){
   const strip = document.getElementById('kpiStrip');
   const cols = Math.min(activeFactories.size, 7);
   strip.style.gridTemplateColumns = `repeat(${cols}, minmax(0,1fr))`;
-  const ytd=4;
   strip.innerHTML = FACTORIES.filter(f=>activeFactories.has(f.id)).map(f=>{
-    const v26 = Math.round([0,1,2,3].reduce((s,mi)=>s+rawVal(f.id,'approved',2026,mi),0));
-    const v25 = Math.round([0,1,2,3].reduce((s,mi)=>s+rawVal(f.id,'approved',2025,mi),0));
-    const d = v25?Math.round((v26-v25)/v25*100):0;
+    // Always current year (2026) vs. prior year (2025), Jan–Apr — intentionally
+    // fixed regardless of the Years/Factories filters below (see kpi-section-sub).
+    const cur = [0,1,2,3].reduce((s,mi)=>s+displayVal(f.id,'approved',2026,mi),0);
+    const prev = [0,1,2,3].reduce((s,mi)=>s+displayVal(f.id,'approved',2025,mi),0);
+    const d = prev?Math.round((cur-prev)/prev*100):0;
     const dc = d>=0?'#3B6D11':'#A32D2D';
     const short = f.code ? `${f.id.toUpperCase()} (${f.code})` : f.id.toUpperCase();
     return `<div class="metric">
       <div class="metric-lbl" style="color:${f.textColor}">${short}</div>
-      <div class="metric-val">${v26.toLocaleString()}</div>
+      <div class="metric-val">${fmtDisplay(cur)}</div>
       <div class="metric-d" style="color:${dc}">${d>=0?'↑':'↓'} ${Math.abs(d)}% vs 2025</div>
     </div>`;
   }).join('');
@@ -1137,8 +1154,8 @@ function openIDVModal(fid, opts){
     const pct = idvGrandTotal ? (rowTotal/idvGrandTotal*100).toFixed(1) : '0.0';
     return `<tr>
       <td style="font-weight:600;color:#1B1F2E;max-width:280px;white-space:normal">${item.item}</td>
-      <td style="color:#374151;font-size:11px;font-weight:600;font-family:ui-monospace,monospace">${item.sport}</td>
-      <td style="color:#374151;font-size:11px;font-weight:600;font-family:ui-monospace,monospace">${item.brand}</td>
+      <td style="color:#374151;font-size:11px;font-weight:600">${asList(item.sport).map(sportName).join(', ')}</td>
+      <td style="color:#374151;font-size:11px;font-weight:600;font-family:ui-monospace,monospace">${asList(item.brand).join(', ')}</td>
       <td style="font-size:13px;font-weight:700;color:${col};letter-spacing:-.01em">${item.idv.toFixed(2)}</td>
       <td style="font-weight:600;color:#1B1F2E">${Math.round(item.qty).toLocaleString()}</td>
       <td style="font-weight:600;color:#1B1F2E">${rowTotal.toLocaleString(undefined,{maximumFractionDigits:1})}</td>
