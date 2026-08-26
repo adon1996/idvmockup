@@ -9,9 +9,6 @@ body{font-family:var(--font-sans,-apple-system,'Inter',ui-sans-serif,sans-serif)
 
 /* Light sidebar */
 .sidebar{width:220px;flex-shrink:0;background:#fff;border-right:1px solid #E9EAEF;display:flex;flex-direction:column}
-.sb-logo{padding:18px 18px 14px;border-bottom:1px solid #E9EAEF}
-.sb-logo span{font-size:15px;font-weight:700;color:#1B1F2E;letter-spacing:-.01em}
-.sb-logo em{display:block;font-size:11px;font-style:normal;color:#9CA3AF;margin-top:2px}
 .nav-sec{padding:16px 10px 6px}
 .nav-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#9CA3AF;padding:0 10px;margin-bottom:6px;font-weight:600}
 .nav-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;font-size:12px;color:#6B7280;cursor:pointer;transition:background .12s,color .12s}
@@ -112,9 +109,6 @@ td.tot{text-align:right;background:#F4F5F8;color:#1B1F2E;font-weight:700}
 .fac-dd-name{font-size:12px;color:#374151;font-weight:500;transition:color .12s}
 .fac-dd-row:not(.checked) .fac-dd-name{color:#9CA3AF}
 
-/* Sidebar — PROLOOK style */
-.sb-logo{padding:22px 18px 18px;border-bottom:1px solid #E9EAEF}
-.sb-logo span{font-size:22px;font-weight:800;letter-spacing:-.03em;color:#1B1F2E}
 .sb-user-card{padding:12px 14px 14px;border-bottom:1px solid #E9EAEF;display:flex;align-items:center;gap:10px}
 .sb-ua{width:38px;height:38px;border-radius:50%;background:#F4F5F8;color:#6B7280;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .sb-un{font-size:12px;font-weight:600;color:#1B1F2E;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -148,11 +142,6 @@ td.tot{text-align:right;background:#F4F5F8;color:#1B1F2E;font-weight:700}
 
 /* Breadcrumb sub-header */
 .sub-header{display:flex;align-items:center;justify-content:space-between;padding:10px 22px 0;flex-shrink:0;flex-wrap:wrap;gap:8px}
-
-/* IDV icon button (inside factory th) */
-.idv-btn{display:inline-flex;align-items:center;justify-content:center;width:18px;height:14px;border-radius:4px;border:none;background:transparent;cursor:pointer;opacity:.55;transition:opacity .15s,transform .15s;padding:0;vertical-align:middle;margin-left:5px;flex-shrink:0}
-.idv-btn:hover{opacity:1;transform:scale(1.15)}
-.idv-btn svg{width:14px;height:11px;pointer-events:none}
 
 /* Modal overlay */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(2px)}
@@ -203,7 +192,6 @@ td.cell-link:hover{text-decoration:underline}
 }
 
 @media (max-width: 480px){
-  .sb-logo span{font-size:18px}
   .qs-name{font-size:12px}
   .metric-val{font-size:17px}
 }
@@ -214,7 +202,6 @@ td.cell-link:hover{text-decoration:underline}
 <div class="shell">
 <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 <aside class="sidebar" id="sidebarEl">
-  <div class="sb-logo"><span>PROLOOK</span></div>
   <div class="sb-user-card">
     <div class="sb-ua"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="6.5" r="3" stroke="#6B7280" stroke-width="1.4"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="#6B7280" stroke-width="1.4" stroke-linecap="round"/></svg></div>
     <div style="min-width:0;flex:1">
@@ -304,7 +291,7 @@ td.cell-link:hover{text-decoration:underline}
   <div class="content">
     <div class="kpi-section-hdr">
       <span class="kpi-section-title">Year-over-Year Snapshot</span>
-      <span class="kpi-section-sub">Current vs. prior year (fixed)</span>
+      <span class="kpi-section-sub">Current year vs. last year</span>
     </div>
     <div class="kpi-strip" id="kpiStrip"></div>
 
@@ -393,7 +380,7 @@ const RAW = {
       2023:[46652,48521,35723,33558,31718,41639,48361,44184,26807,32387,32683,46546],
       2024:[53295,50359,34902,30600,25849,34839,55762,44969,25756,32164,33407,43206],
       2025:[64923,48285,40605,38705,37328,38818,61659,45190,28205,28903,30213,41347],
-      2026:[58451,46355,40186,12719,0,0,0,0,0,0,0,0]
+      2026:[58451,46355,40186,12719,35200,36600,58100,42600,0,0,0,0]
     },
     shipped:{
       2021:[18244,22291,31124,24965,28149,17906,30559,35777,33464,28013,25816,27148],
@@ -401,7 +388,7 @@ const RAW = {
       2023:[36306,39675,54012,37981,41285,30630,41363,44735,41736,30500,29728,26419],
       2024:[43865,48496,45756,41978,32179,33496,42420,44786,43702,35989,32659,28691],
       2025:[47955,45680,62618,43029,44591,41197,45885,48595,43313,32563,30006,23569],
-      2026:[43816,51711,53102,11873,0,0,0,0,0,0,0,0]
+      2026:[43816,51711,53102,11873,42000,38800,43300,45800,0,0,0,0]
     }
   },
   hcm:{
@@ -411,7 +398,7 @@ const RAW = {
       2023:[0,0,0,0,0,0,0,0,0,0,0,0],
       2024:[0,0,0,0,0,0,0,65,1260,2827,7564,6632],
       2025:[5601,6393,8199,7505,6977,9949,10994,11874,10082,13926,17304,10799],
-      2026:[7472,11490,12525,3224,0,0,0,0,0,0,0,0]
+      2026:[7472,11490,12525,3224,10900,15500,17100,18500,0,0,0,0]
     },
     shipped:{
       2021:[0,0,0,0,0,0,0,0,0,0,0,0],
@@ -419,7 +406,7 @@ const RAW = {
       2023:[0,0,0,0,0,0,0,0,0,0,0,0],
       2024:[0,0,0,0,0,0,0,65,1519,2352,4099,7921],
       2025:[8474,6065,8181,5989,8226,10119,9949,10975,10842,12952,16270,13382],
-      2026:[8348,11545,11788,3964,0,0,0,0,0,0,0,0]
+      2026:[8348,11545,11788,3964,12800,15800,15500,17100,0,0,0,0]
     }
   },
   pmp:{
@@ -429,7 +416,7 @@ const RAW = {
       2023:[14500,13800,15200,12400,12800,15800,17200,14600,11800,13400,12800,15100],
       2024:[16200,15400,14800,13200,11800,14200,18400,15800,12600,13800,13200,15600],
       2025:[18400,16800,17200,16400,15600,17800,20200,17600,14200,15400,14800,17200],
-      2026:[19200,17800,18400,6800,0,0,0,0,0,0,0,0]
+      2026:[19200,17800,18400,6800,16500,18800,21400,18600,0,0,0,0]
     },
     shipped:{
       2021:[7200,6800,8400,7200,6200,8400,10200,8200,6800,7900,7500,8700],
@@ -437,7 +424,7 @@ const RAW = {
       2023:[13600,12800,14200,11600,12000,14800,16200,13800,11200,12600,12000,14200],
       2024:[15200,14600,13800,12400,11200,13400,17200,14800,12000,13000,12400,14600],
       2025:[17200,15800,16200,15400,14800,16800,18800,16600,13600,14600,14000,16200],
-      2026:[18200,16800,17400,6400,0,0,0,0,0,0,0,0]
+      2026:[18200,16800,17400,6400,15600,17800,19900,17600,0,0,0,0]
     }
   },
   qxx:{
@@ -447,7 +434,7 @@ const RAW = {
       2023:[6200,5800,6400,5200,5400,6600,7200,6100,5000,5600,5400,6300],
       2024:[6800,6400,6200,5600,5000,6000,7600,6500,5200,5700,5500,6400],
       2025:[7600,7000,7200,6800,6500,7400,8400,7200,5800,6200,6100,7000],
-      2026:[7900,7400,7600,2800,0,0,0,0,0,0,0,0]
+      2026:[7900,7400,7600,2800,6800,7800,8800,7600,0,0,0,0]
     },
     shipped:{
       2021:[3000,2700,3300,2900,2500,3500,4200,3400,2700,3100,3000,3400],
@@ -455,7 +442,7 @@ const RAW = {
       2023:[5800,5500,6000,4900,5100,6200,6800,5800,4700,5300,5100,5900],
       2024:[6400,6000,5800,5200,4700,5600,7100,6100,4900,5400,5200,6000],
       2025:[7100,6600,6800,6300,6100,6900,7800,6800,5500,5900,5700,6600],
-      2026:[7400,6900,7100,2600,0,0,0,0,0,0,0,0]
+      2026:[7400,6900,7100,2600,6400,7200,8200,7100,0,0,0,0]
     }
   },
   sox:{
@@ -465,7 +452,7 @@ const RAW = {
       2023:[7700,7200,8000,6500,6700,8200,9000,7600,6200,7000,6700,7800],
       2024:[8500,8000,7700,6900,6200,7400,9500,8100,6500,7100,6800,8000],
       2025:[9500,8700,9000,8500,8100,9200,10500,9000,7300,7700,7600,8700],
-      2026:[9800,9200,9500,3500,0,0,0,0,0,0,0,0]
+      2026:[9800,9200,9500,3500,8500,9600,11000,9400,0,0,0,0]
     },
     shipped:{
       2021:[3800,3500,4200,3600,3100,4300,5200,4200,3300,3900,3700,4300],
@@ -473,7 +460,7 @@ const RAW = {
       2023:[7100,6700,7400,6100,6300,7600,8400,7100,5800,6500,6200,7200],
       2024:[7900,7400,7100,6400,5800,6900,8800,7500,6100,6600,6300,7400],
       2025:[8800,8100,8400,7900,7600,8600,9800,8400,6900,7200,7100,8100],
-      2026:[9100,8500,8800,3200,0,0,0,0,0,0,0,0]
+      2026:[9100,8500,8800,3200,8000,9000,10300,8800,0,0,0,0]
     }
   },
   svn:{
@@ -483,7 +470,7 @@ const RAW = {
       2023:[9800,9200,10200,8300,8600,10400,11400,9700,7800,8900,8600,9900],
       2024:[10900,10200,9800,8800,7900,9500,12100,10300,8200,9100,8700,10100],
       2025:[12100,11100,11400,10800,10300,11700,13300,11500,9200,9800,9600,11100],
-      2026:[12500,11700,12000,4400,0,0,0,0,0,0,0,0]
+      2026:[12500,11700,12000,4400,10800,12200,13900,12000,0,0,0,0]
     },
     shipped:{
       2021:[4700,4400,5300,4600,3900,5500,6500,5200,4200,4900,4700,5400],
@@ -491,7 +478,7 @@ const RAW = {
       2023:[9100,8700,9500,7700,8000,9700,10600,9000,7300,8300,8000,9200],
       2024:[10100,9700,9100,8200,7400,8800,11200,9600,7700,8500,8100,9400],
       2025:[11300,10400,10600,10000,9600,10900,12400,10700,8600,9100,8900,10400],
-      2026:[11600,10900,11100,4000,0,0,0,0,0,0,0,0]
+      2026:[11600,10900,11100,4000,10000,11400,13000,11200,0,0,0,0]
     }
   },
   xsd:{
@@ -501,7 +488,7 @@ const RAW = {
       2023:[10900,10200,11300,9200,9500,11600,12700,10700,8700,9900,9500,11000],
       2024:[12000,11300,10900,9800,8800,10500,13400,11400,9100,10100,9600,11200],
       2025:[13400,12300,12700,12000,11400,13000,14800,12700,10200,10900,10700,12300],
-      2026:[13900,13000,13400,4900,0,0,0,0,0,0,0,0]
+      2026:[13900,13000,13400,4900,12000,13600,15500,13300,0,0,0,0]
     },
     shipped:{
       2021:[5300,5000,5900,5200,4400,6100,7200,5900,4800,5600,5200,6100],
@@ -509,7 +496,7 @@ const RAW = {
       2023:[10100,9400,10400,8500,8800,10700,11700,9900,8100,9200,8700,10100],
       2024:[11100,10400,10100,9000,8200,9700,12400,10500,8500,9400,8900,10400],
       2025:[12400,11300,11700,11000,10600,12000,13700,11700,9500,10100,9900,11400],
-      2026:[12800,12000,12400,4500,0,0,0,0,0,0,0,0]
+      2026:[12800,12000,12400,4500,11100,12600,14400,12300,0,0,0,0]
     }
   }
 };
@@ -520,6 +507,20 @@ const ZERO_ALL_YEARS = {2021:ZERO_YEAR,2022:ZERO_YEAR,2023:ZERO_YEAR,2024:ZERO_Y
 ['cpa','jcg','mdj','qts','spy'].forEach(fid=>{
   RAW[fid] = { approved: ZERO_ALL_YEARS, shipped: ZERO_ALL_YEARS };
 });
+
+// Which months of the current year actually have data — derived from the data
+// itself rather than a hardcoded cutoff, so "current period" naturally moves
+// forward as more months get filled in instead of staying stuck on one month.
+const CURRENT_YEAR = 2026;
+function computeElapsedMonths(yr){
+  let last = -1;
+  Object.keys(RAW).forEach(fid=>{
+    (RAW[fid].approved[yr]||[]).forEach((v,mi)=>{ if(v>0) last = Math.max(last, mi); });
+    (RAW[fid].shipped[yr]||[]).forEach((v,mi)=>{ if(v>0) last = Math.max(last, mi); });
+  });
+  return last; // 0-based index of the last month with any real data, e.g. 7 = August
+}
+const LAST_ELAPSED_MONTH = computeElapsedMonths(CURRENT_YEAR);
 
 const IDV_DATA = {
   blb:[
@@ -669,7 +670,6 @@ let activeFactories = new Set(IS_NARROW_VIEWPORT ? [FACTORIES[0].id] : FACTORIES
 let activeBrands = new Set(BRANDS.map(b=>b.code));
 
 function fmt(n){ return n===0?'—':n.toLocaleString(); }
-function isFuture(fid,yr,mi){ return yr===2026 && (RAW[fid]?.approved[2026]?.[mi]||0)===0 && mi>=4; }
 
 // Some items (blanks, shared programs) belong to more than one brand or sport
 // at once — brand/sport fields can be a single code or an array of codes.
@@ -751,7 +751,7 @@ function fmtDisplay(v){
 function tdCell(fid, metric, yr, mi, curYr, divl){
   const raw = rawVal(fid, metric, yr, mi);
   const isCur = yr===curYr;
-  const isFuture = yr===2026 && mi>=4 && baseRawVal(fid, metric, yr, mi)===0;
+  const isFuture = yr===CURRENT_YEAR && mi>LAST_ELAPSED_MONTH && baseRawVal(fid, metric, yr, mi)===0;
   const blank = Math.round(raw)===0; // covers future-blank months and brand filters with no matching share
   const clickable = !blank;
   const text = blank ? '—' : fmtDisplay(displayVal(fid, metric, yr, mi));
@@ -775,18 +775,25 @@ function buildKPI(){
   const strip = document.getElementById('kpiStrip');
   const cols = Math.min(activeFactories.size, 7);
   strip.style.gridTemplateColumns = `repeat(${cols}, minmax(0,1fr))`;
+
+  // Always current year vs. prior year — intentionally fixed regardless of the
+  // Years/Factories filters below (see kpi-section-sub). The *window* itself is
+  // dynamic: it always runs Jan through whichever month actually has data, so
+  // it naturally extends as more months come in instead of staying stuck at
+  // one hardcoded month — the label just doesn't spell out the exact range.
+  const monthIdxs = Array.from({length: LAST_ELAPSED_MONTH + 1}, (_, i) => i);
+  const priorYr = CURRENT_YEAR - 1;
+
   strip.innerHTML = FACTORIES.filter(f=>activeFactories.has(f.id)).map(f=>{
-    // Always current year (2026) vs. prior year (2025), Jan–Apr — intentionally
-    // fixed regardless of the Years/Factories filters below (see kpi-section-sub).
-    const cur = [0,1,2,3].reduce((s,mi)=>s+displayVal(f.id,'approved',2026,mi),0);
-    const prev = [0,1,2,3].reduce((s,mi)=>s+displayVal(f.id,'approved',2025,mi),0);
+    const cur = monthIdxs.reduce((s,mi)=>s+displayVal(f.id,'approved',CURRENT_YEAR,mi),0);
+    const prev = monthIdxs.reduce((s,mi)=>s+displayVal(f.id,'approved',priorYr,mi),0);
     const d = prev?Math.round((cur-prev)/prev*100):0;
     const dc = d>=0?'#3B6D11':'#A32D2D';
     const short = f.code ? `${f.id.toUpperCase()} (${f.code})` : f.id.toUpperCase();
     return `<div class="metric">
       <div class="metric-lbl" style="color:${f.textColor}">${short}</div>
       <div class="metric-val">${fmtDisplay(cur)}</div>
-      <div class="metric-d" style="color:${dc}">${d>=0?'↑':'↓'} ${Math.abs(d)}% vs 2025</div>
+      <div class="metric-d" style="color:${dc}">${d>=0?'↑':'↓'} ${Math.abs(d)}%</div>
     </div>`;
   }).join('');
 }
@@ -802,7 +809,7 @@ function buildTable(){
 
   h += `<tr><th class="th-cat" style="text-align:left;padding-left:14px;background:#F9FAFB;color:#6B7280">Month</th>`;
   visF.forEach(f=>{
-    h += `<th class="th-cat divl" colspan="${years.length*2}" style="background:${f.bg};color:${f.textColor};border-bottom:none;box-shadow:inset 0 -2px 0 0 ${f.border}"><span style="display:inline-flex;align-items:center;justify-content:center;gap:4px;white-space:nowrap">${f.fullName}<button class="idv-btn" style="color:${f.textColor}" onclick="openIDVModal('${f.id}');event.stopPropagation()" title="View Item Difficulty Values"><svg viewBox="0 0 14 11" fill="none"><path d="M1 1.5h8M1 5h5.5M1 8.5h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="11" cy="8" r="2.4" stroke="currentColor" stroke-width="1.3"/><path d="M12.7 9.7l1.1 1.1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button></span></th>`;
+    h += `<th class="th-cat divl" colspan="${years.length*2}" style="background:${f.bg};color:${f.textColor};border-bottom:none;box-shadow:inset 0 -2px 0 0 ${f.border}"><span style="display:inline-flex;align-items:center;justify-content:center;white-space:nowrap">${f.fullName}</span></th>`;
   });
   if(showTotals) h += `<th class="th-cat divl" colspan="${years.length*2}" style="background:${TOTALS_COLOR.bg};color:${TOTALS_COLOR.text};border-bottom:none;box-shadow:inset 0 -2px 0 0 ${TOTALS_COLOR.border}">Totals</th>`;
   h += '</tr><tr>';
@@ -836,12 +843,12 @@ function buildTable(){
     if(showTotals){
       years.forEach((yr,yi)=>{
         const tot=visF.reduce((s,f)=>s+displayVal(f.id,'approved',yr,mi),0);
-        const isCur=yr===curYr; const isZ=isCur&&tot===0&&yr===2026&&mi>=4;
+        const isCur=yr===curYr; const isZ=isCur&&tot===0&&yr===CURRENT_YEAR&&mi>LAST_ELAPSED_MONTH;
         h+=`<td class="tot${isCur?' cur':''} ${yi===0?'divl':''}">${isZ?'—':fmtDisplay(tot)}</td>`;
       });
       years.forEach(yr=>{
         const tot=visF.reduce((s,f)=>s+displayVal(f.id,'shipped',yr,mi),0);
-        const isCur=yr===curYr; const isZ=isCur&&tot===0&&yr===2026&&mi>=4;
+        const isCur=yr===curYr; const isZ=isCur&&tot===0&&yr===CURRENT_YEAR&&mi>LAST_ELAPSED_MONTH;
         h+=`<td class="tot${isCur?' cur':''}">${isZ?'—':fmtDisplay(tot)}</td>`;
       });
     }
@@ -1126,22 +1133,16 @@ function idvColor(v){
 }
 
 function openIDVModal(fid, opts){
-  opts = opts || {mode:'catalog'};
   const f = FACTORIES.find(x=>x.id===fid);
-  let items, title, subtitle;
-
-  if(opts.mode==='month'){
-    const bd = computeBreakdown(fid, opts.metric, opts.yr, opts.mi);
-    items = bd.items;
-    const metricLbl = opts.metric==='approved' ? 'Approved' : 'Shipped';
-    const periodLbl = opts.mi===null ? `${opts.yr} — Full Year` : `${MONTHS[opts.mi]} ${opts.yr}`;
-    title = `${f.fullName} — ${periodLbl}`;
-    subtitle = `${metricLbl} breakdown — ${items.length} items — ${bd.total.toLocaleString()} units`;
-  } else {
-    items = IDV_DATA[fid]||[];
-    title = f.fullName;
-    subtitle = items.length+' items — Item Difficulty Values';
-  }
+  const bd = computeBreakdown(fid, opts.metric, opts.yr, opts.mi);
+  const items = bd.items;
+  const metricLbl = opts.metric==='approved' ? 'Approved' : 'Shipped';
+  const periodLbl = opts.mi===null ? `${opts.yr} — Full Year` : `${MONTHS[opts.mi]} ${opts.yr}`;
+  const title = `${f.fullName} — ${periodLbl}`;
+  const totalLbl = viewMode==='units'
+    ? `${bd.total.toLocaleString()} units`
+    : `${bd.idvTotal.toLocaleString(undefined,{minimumFractionDigits:1,maximumFractionDigits:1})} total IDV`;
+  const subtitle = `${metricLbl} breakdown — ${items.length} items — ${totalLbl}`;
 
   document.getElementById('idvModalTitle').textContent = title;
   document.getElementById('idvModalSub').textContent = subtitle;
@@ -1187,7 +1188,7 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') document.getElemen
     <div id="idvModalAccent" style="height:3px;flex-shrink:0"></div>
     <div class="modal-body">
       <table class="idv-tbl">
-        <thead><tr><th>Old Master Block Name</th><th>Sport</th><th>Brand</th><th>IDV</th><th>Quantity</th><th>IDV Total</th><th>%</th></tr></thead>
+        <thead><tr><th>Master Block Name</th><th>Sport</th><th>Brand</th><th>IDV</th><th>Quantity</th><th>IDV Total</th><th>%</th></tr></thead>
         <tbody id="idvTableBody"></tbody>
       </table>
     </div>
