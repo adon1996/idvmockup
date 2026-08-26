@@ -27,7 +27,7 @@ The page is a classic app shell: a left sidebar, a top bar, a breadcrumb sub-hea
 │           │  [card][card][card][card][card][card][card]  │  ← KPI cards
 │           │                                               │
 │           │  ┌─────────────────────────────────────────┐ │
-│           │  │ Unit output   [2025 vs 2026]             │ │
+│           │  │ Units         [2025 vs 2026]             │ │
 │           │  │ (Units) (Item Difficulty Value)  Years▾ Factories▾│ ← Toolbar
 │           │  ├─────────────────────────────────────────┤ │
 │           │  │           [ the big pivot table ]        │ │  ← Main table
@@ -74,6 +74,7 @@ Below that header is a row of cards, one per currently-visible factory (the row 
 - The factory’s short code at the top (e.g. “BLB”, “HCM”), colored using that factory’s assigned color (see section 7).
 - A large bold number — the factory’s current-period total.
 - Below that, a smaller line showing the percentage change vs. the prior year, with an up or down arrow, colored green if the change is positive/flat, red if negative (e.g. “↑ 12%”). Note this is just the percentage — it does **not** append “vs 2025” or any other year label next to it.
+- **Zero-data exception:** for a factory with no real data in *either* the current or prior period (the placeholder factories — see section 7 — always fall into this bucket), showing a colored green “↑ 0%” would misleadingly read as “flat, healthy” growth. Instead, when both the current and prior totals are zero, the arrow is omitted entirely and the “0%” text is shown in a plain gray rather than green or red. A factory with real data in at least one of the two periods still gets the normal colored-arrow treatment, even if the resulting percentage happens to be exactly 0%.
 
 **Important behavior:** this comparison window is fixed, not affected by the Year/Factory filters below the table — but internally it is *not* hardcoded to a specific month range. The cards always compare the current year’s year-to-date totals (January through whichever month is the most recent one with real data) against the prior year’s totals for that same span of months. This window automatically advances as later months of the current year get real data — e.g. it covers Jan–Aug once August data exists, and will cover Jan–Sep the moment September data lands, with no code change required. The visible label doesn’t spell any of this out to the user (it just says “Current year vs. last year”), but the underlying month range must still be computed dynamically, not hardcoded to a specific month — that dynamic behavior is what never changes, regardless of the Year filter below: the cards always answer “how are we doing this year vs. last year so far,” for whatever “so far” currently means.
 
@@ -87,7 +88,7 @@ This sits directly above the main table, inside the same card/panel as the table
 
 ### 4.1 Left side — title, badge, and view toggle
 
-- A title, “Unit output” (or “Item Difficulty Value output” when the IDV view is active — see 4.3) — updates automatically to match the second row’s toggle state.
+- A title, “Units” (or “Item Difficulty Value” when the IDV view is active — see 4.3) — updates automatically to match the second row’s toggle state.
 - A rounded badge next to the title showing the current year selection, e.g. “2025 vs 2026” if two years are selected, or just “2026” if only one year is selected.
 - Below that: a segmented two-button toggle, “Units” / “Item Difficulty Value”. Exactly one is active at a time, shown with a white pill background against a gray track (like an iOS-style segmented control). “Units” is the default/starting selection.
 
@@ -116,12 +117,12 @@ This is the centerpiece of the dashboard and the most structurally complex part.
 ### 5.1 What the rows and columns represent
 
 - Rows: one per calendar month (January through December), always in that fixed order, plus one extra “Totals” row at the very bottom that sums the whole column above it. The Totals row is visually distinct (shaded background, bold text).
-- Columns: for every factory that’s currently checked in the Factories filter, there are two groups of columns — “Approved” and “Shipped” — and within each group, one column per currently-selected year. So if 3 factories and 2 years are selected, that’s 3 factories × 2 metrics × 2 years = 12 data columns, plus (if more than one factory is visible) an extra “Totals” column group (also split into Approved/Shipped × years) that sums across all visible factories.
+- Columns: for every factory that’s currently checked in the Factories filter, there are two groups of columns — “Approved” and “Shipped” — and within each group, one column per currently-selected year. So if 3 factories and 2 years are selected, that’s 3 factories × 2 metrics × 2 years = 12 data columns, plus (if more than one factory is visible) an extra column group headed “Grand Totals” (also split into Approved/Shipped × years) that sums across all visible factories.
 - If only one factory is selected, the “Totals” column group is hidden entirely (it would be redundant — same numbers as the single factory).
 
 ### 5.2 The header — three stacked rows
 
-1. **Top header row:** one wide cell per factory, spanning all of that factory’s columns, showing the factory’s full name (not just the code) — e.g. “BLB - Billerby Corporation”. Each factory’s header cell is tinted with a soft background color unique to that factory (see section 7), with a slightly stronger-colored line along its bottom edge. This header cell is **not** clickable and has no icon in it — it’s purely a label. (An earlier version of the mockup had a small icon here, then briefly made the whole cell clickable to open a factory-wide item catalog; both were removed. The only way into the item-breakdown modal now is by clicking an actual data cell — see 5.3 and section 6.) If a Totals column group is showing, it gets its own header cell here too, styled in a dark neutral color (deliberately different from any factory’s color, so it can’t be mistaken for “just another factory”); the Totals header cell is also not clickable.
+1. **Top header row:** one wide cell per factory, spanning all of that factory’s columns, showing the factory’s full name (not just the code) — e.g. “BLB - Billerby Corporation”. Each factory’s header cell is tinted with a soft background color unique to that factory (see section 7), with a slightly stronger-colored line along its bottom edge. This header cell is **not** clickable and has no icon in it — it’s purely a label. (An earlier version of the mockup had a small icon here, then briefly made the whole cell clickable to open a factory-wide item catalog; both were removed. The only way into the item-breakdown modal now is by clicking an actual data cell — see 5.3 and section 6.) If a Totals column group is showing, it gets its own header cell here too, reading “Grand Totals” (not just “Totals”), styled in a dark neutral color (deliberately different from any factory’s color, so it can’t be mistaken for “just another factory”); this header cell is also not clickable.
 2. **Second header row:** under each factory’s name, two narrower cells labeled “Approved” and “Shipped”, each spanning that group’s year columns.
 3. **Third header row:** under each Approved/Shipped group, one narrow cell per selected year (e.g. “2025”, “2026”). The most recent selected year in each group is visually emphasized (bold, colored background matching the factory) to draw the eye to “this year” vs. comparison years.
 
