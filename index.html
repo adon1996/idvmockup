@@ -16,36 +16,69 @@ body{font-family:var(--font-sans,-apple-system,'Inter',ui-sans-serif,sans-serif)
 .nav-item.active{background:#EEF2FF;color:#4338CA;font-weight:600}
 .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 
-/* Topbar */
-.topbar{height:52px;background:#fff;border-bottom:1px solid #E9EAEF;display:flex;align-items:center;justify-content:space-between;padding:0 22px;flex-shrink:0;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
-.tb-crumb{font-size:12px;color:#9CA3AF;font-weight:400}
-.tb-title{font-size:12px;font-weight:600;color:#1B1F2E}
-.seg{display:flex;background:#F4F5F8;border:1px solid #E9EAEF;border-radius:8px;overflow:hidden;padding:2px}
-.seg-btn{padding:4px 12px;font-size:11px;font-weight:500;cursor:pointer;color:#9CA3AF;background:transparent;border:none;border-radius:6px;transition:all .12s}
+.sb-user-card{padding:12px 14px 14px;border-bottom:1px solid #E9EAEF;display:flex;align-items:center;gap:10px}
+.sb-ua{width:38px;height:38px;border-radius:50%;background:#F4F5F8;color:#6B7280;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sb-un{font-size:12px;font-weight:600;color:#1B1F2E;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-ur{font-size:10px;color:#9CA3AF;margin-top:1px}
+.sb-umenu{margin-left:auto;color:#9CA3AF;cursor:pointer;flex-shrink:0}
+.nav-badge{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;border-radius:9px;font-size:10px;font-weight:700;padding:0 5px;background:#2563EB;color:#fff;margin-left:auto;flex-shrink:0}
+.nav-item-row{display:flex;align-items:center;width:100%}
+.nav-sub{display:flex;flex-direction:column;gap:1px;padding-bottom:4px}
+.nav-sub-item{font-size:11px;color:#9CA3AF;padding:5px 10px 5px 30px;cursor:pointer;border-radius:6px;transition:color .12s;list-style:none}
+.nav-sub-item:hover{color:#374151}
+.nav-sub-item.active{color:#1B1F2E;font-weight:600}
+
+/* Page header */
+.page-hdr{display:flex;align-items:center;gap:14px;padding:12px 22px;background:#fff;border-bottom:1px solid #E9EAEF;flex-shrink:0;flex-wrap:wrap;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.hdr-menu-btn{display:none;align-items:center;justify-content:center;width:32px;height:32px;border-radius:7px;cursor:pointer;color:#6B7280;background:transparent;border:none;flex-shrink:0;margin-right:-4px}
+.hdr-menu-btn:hover{background:#F4F5F8}
+.page-title{font-size:16px;font-weight:700;color:#1B1F2E;white-space:nowrap;margin-right:4px}
+.hdr-group{display:flex;align-items:center;gap:8px}
+.hdr-lbl{font-size:11px;color:#9CA3AF;font-weight:500;white-space:nowrap}
+.brand-btn{min-width:200px;padding:9px 14px;font-weight:500;color:#6B7280;letter-spacing:.02em}
+.seg{display:flex;background:#F4F5F8;border:1px solid #E9EAEF;border-radius:20px;overflow:hidden;padding:2px}
+.seg-btn{padding:5px 14px;font-size:11px;font-weight:500;cursor:pointer;color:#6B7280;background:transparent;border:none;border-radius:18px;transition:all .12s;white-space:nowrap}
 .seg-btn.on{background:#fff;color:#1B1F2E;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,0.08)}
-.avatar{width:28px;height:28px;border-radius:50%;background:#1B1F2E;color:#fff;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center}
+
+/* Icon toggle (cards / chart) */
+.icon-seg{display:flex;border:1px solid #E9EAEF;border-radius:8px;overflow:hidden;background:#fff}
+.icon-seg-btn{width:34px;height:30px;display:flex;align-items:center;justify-content:center;border:none;background:#F9FAFB;color:#9CA3AF;cursor:pointer;transition:all .12s}
+.icon-seg-btn+.icon-seg-btn{border-left:1px solid #E9EAEF}
+.icon-seg-btn.on{background:#fff;color:#1B1F2E}
 
 /* Content area */
 .content{flex:1;overflow:auto;padding:18px 22px;display:flex;flex-direction:column;gap:14px}
 
 /* KPI strip */
-.kpi-section-hdr{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
-.kpi-section-title{font-size:12px;font-weight:700;color:#1B1F2E}
+.kpi-section-hdr{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.kpi-section-hdr-l{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.kpi-section-title{font-size:13px;font-weight:700;color:#1B1F2E}
 .kpi-section-sub{font-size:11px;color:#9CA3AF}
-.kpi-strip{display:grid;gap:12px}
-.metric{background:#fff;border-radius:12px;padding:14px 16px;border:1px solid #E9EAEF;transition:opacity .15s;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
+.kpi-strip{display:grid;gap:12px;grid-template-columns:repeat(var(--kpi-cols,8),minmax(0,1fr))}
+.metric{background:#fff;border-radius:12px;padding:16px 18px;border:1px solid #E9EAEF;transition:opacity .15s;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
 .metric.dimmed{opacity:.35}
-.metric-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700}
-.metric-val{font-size:20px;font-weight:700;color:#1B1F2E}
-.metric-d{font-size:11px;margin-top:5px;font-weight:500}
+.metric-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700}
+.metric-val{font-size:26px;font-weight:700;color:#1B1F2E;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.metric-d{font-size:11px;margin-top:8px;font-weight:500}
+
+/* KPI chart view */
+.kpi-chart{background:#fff;border:1px solid #E9EAEF;border-radius:12px;padding:16px 18px 12px;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
+.kc-legend{display:flex;gap:14px;font-size:11px;color:#6B7280;margin-bottom:12px}
+.kc-legend span{display:inline-flex;align-items:center;gap:5px}
+.kc-sw{width:10px;height:10px;border-radius:2px;display:inline-block}
+.kc-plot{display:flex;align-items:flex-end;gap:10px;height:200px;border-bottom:1px solid #E9EAEF;overflow-x:auto}
+.kc-grp{flex:1;min-width:44px;display:flex;align-items:flex-end;justify-content:center;gap:3px;height:100%}
+.kc-bar{width:14px;border-radius:3px 3px 0 0;min-height:0;transition:height .2s}
+.kc-labels{display:flex;gap:10px;margin-top:6px}
+.kc-lbl{flex:1;min-width:44px;text-align:center;font-size:10px;font-weight:700;letter-spacing:.04em}
 
 /* Table card */
 .table-card{background:#fff;border:1px solid #E9EAEF;border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
-.tbar{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #E9EAEF;flex-wrap:wrap;gap:10px}
+.tbar{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #E9EAEF;flex-wrap:wrap;gap:10px}
 .tbar-l{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .tbar-title{font-size:13px;font-weight:700;color:#1B1F2E}
 .badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:#EEF2FF;color:#4338CA}
-.tbar-r{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.tbar-r{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .filter-row{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
 .filter-lbl{font-size:11px;color:#9CA3AF;white-space:nowrap;font-weight:500}
 .chip{padding:3px 10px;border-radius:20px;font-size:11px;cursor:pointer;color:#9CA3AF;background:#F4F5F8;border:1px solid #E9EAEF;user-select:none;white-space:nowrap;transition:all .12s;font-weight:500}
@@ -109,39 +142,9 @@ td.tot{text-align:right;background:#F4F5F8;color:#1B1F2E;font-weight:700}
 .fac-dd-name{font-size:12px;color:#374151;font-weight:500;transition:color .12s}
 .fac-dd-row:not(.checked) .fac-dd-name{color:#9CA3AF}
 
-.sb-user-card{padding:12px 14px 14px;border-bottom:1px solid #E9EAEF;display:flex;align-items:center;gap:10px}
-.sb-ua{width:38px;height:38px;border-radius:50%;background:#F4F5F8;color:#6B7280;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.sb-un{font-size:12px;font-weight:600;color:#1B1F2E;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sb-ur{font-size:10px;color:#9CA3AF;margin-top:1px}
-.sb-umenu{margin-left:auto;color:#9CA3AF;cursor:pointer;flex-shrink:0}
-.nav-badge{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;border-radius:9px;font-size:10px;font-weight:700;padding:0 5px;background:#2563EB;color:#fff;margin-left:auto;flex-shrink:0}
-.nav-item-row{display:flex;align-items:center;width:100%}
-.nav-sub{display:flex;flex-direction:column;gap:1px;padding-bottom:4px}
-.nav-sub-item{font-size:11px;color:#9CA3AF;padding:5px 10px 5px 30px;cursor:pointer;border-radius:6px;transition:color .12s;list-style:none}
-.nav-sub-item:hover{color:#374151}
-.nav-sub-item.active{color:#1B1F2E;font-weight:600}
-
 /* Static date range */
 .date-range{display:flex;align-items:center;gap:4px;padding:5px 11px;border:1px solid #E9EAEF;border-radius:8px;font-size:11px;color:#6B7280;background:#fff;white-space:nowrap}
 .dr-sep{color:#D1D5DB;margin:0 3px}
-
-/* Topbar — app bar */
-.topbar{height:48px;padding:0 16px}
-.tb-icon-btn{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:7px;cursor:pointer;color:#6B7280;background:transparent;border:none;transition:background .12s;flex-shrink:0}
-.tb-icon-btn:hover{background:#F4F5F8}
-.tb-divider{width:1px;height:20px;background:#E9EAEF;flex-shrink:0}
-.qs-brand{display:flex;align-items:center;gap:7px;padding:5px 10px;border-radius:8px;cursor:pointer;transition:background .12s}
-.qs-brand:hover{background:#F4F5F8}
-.qs-icon{width:20px;height:20px;border-radius:5px;background:#E8453C;flex-shrink:0;display:flex;align-items:center;justify-content:center}
-.qs-name{font-size:13px;font-weight:700;color:#1B1F2E;letter-spacing:-.01em}
-.qs-caret{color:#9CA3AF;transition:transform .15s}
-.qs-brand.open .qs-caret{transform:rotate(180deg)}
-.bell-wrap{position:relative;display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:7px;cursor:pointer;color:#6B7280;transition:background .12s;flex-shrink:0}
-.bell-wrap:hover{background:#F4F5F8}
-.bell-dot{position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:#EF4444;border:1.5px solid #fff}
-
-/* Breadcrumb sub-header */
-.sub-header{display:flex;align-items:center;justify-content:space-between;padding:10px 22px 0;flex-shrink:0;flex-wrap:wrap;gap:8px}
 
 /* Modal overlay */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(2px)}
@@ -173,6 +176,10 @@ td.cell-link:hover{text-decoration:underline}
 .sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:499}
 .sidebar-backdrop.open{display:block}
 
+@media (max-width: 1200px){
+  .kpi-strip{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+}
+
 @media (max-width: 900px){
   .sidebar{
     position:fixed;top:0;left:0;bottom:0;z-index:500;
@@ -183,17 +190,21 @@ td.cell-link:hover{text-decoration:underline}
     transform:translateX(0);
     box-shadow:8px 0 24px rgba(0,0,0,0.18);
   }
+  .hdr-menu-btn{display:flex}
+  .page-hdr{padding:10px 12px;gap:10px}
   .content{padding:14px 12px;gap:10px}
-  .sub-header{padding:10px 12px 0}
   .kpi-strip{gap:8px}
   .metric{padding:11px 12px}
+  .metric-val{font-size:20px}
   .tbar{padding:12px 14px}
   .modal-box{max-width:95vw;max-height:88vh}
 }
 
 @media (max-width: 480px){
-  .qs-name{font-size:12px}
-  .metric-val{font-size:17px}
+  .page-title{width:100%}
+  .brand-btn{min-width:0;flex:1}
+  .kpi-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .metric-val{font-size:18px}
 }
 </style>
 
@@ -248,66 +259,58 @@ td.cell-link:hover{text-decoration:underline}
 </aside>
 
 <div class="main">
-  <header class="topbar">
-    <div style="display:flex;align-items:center;gap:4px">
-      <button class="tb-icon-btn" id="sidebarToggleBtn">
-        <svg width="17" height="17" viewBox="0 0 17 17" fill="none"><path d="M2 4h13M2 8.5h13M2 13h13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+  <header class="page-hdr">
+    <button class="hdr-menu-btn" id="sidebarToggleBtn" title="Menu">
+      <svg width="17" height="17" viewBox="0 0 17 17" fill="none"><path d="M2 4h13M2 8.5h13M2 13h13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <span class="page-title">Production Dashboard</span>
+    <div class="dd" id="brandTopDd">
+      <button class="dd-btn brand-btn" id="brandTopBtn">
+        <span id="brandTopName">QUICKSTRIKE</span>
+        <svg class="dd-caret" width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 3.5l3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
-      <div class="tb-divider"></div>
-      <div class="dd" id="brandTopDd">
-        <div class="qs-brand" id="brandTopBtn">
-          <div class="qs-icon">
-            <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 8.5L5.5 2l3.5 6.5H2z" fill="#fff" opacity=".9"/></svg>
-          </div>
-          <span class="qs-name" id="brandTopName">QUICKSTRIKE</span>
-          <svg class="qs-caret" width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 4l3.5 3.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="dd-panel" id="brandTopPanel" style="right:auto;left:0">
-          <div class="dd-search-wrap"><input id="brandTopSearch" type="text" placeholder="Search brand…"></div>
-          <div class="dd-opt on" id="brandTopAll" data-brand="__ALL__">QUICKSTRIKE — All Brands</div>
-          <div id="brandTopOpts" style="overflow-y:auto;max-height:260px"></div>
-        </div>
+      <div class="dd-panel" id="brandTopPanel" style="right:auto;left:0">
+        <div class="dd-search-wrap"><input id="brandTopSearch" type="text" placeholder="Search brand…"></div>
+        <div class="dd-opt on" id="brandTopAll" data-brand="__ALL__">QUICKSTRIKE — All Brands</div>
+        <div id="brandTopOpts" style="overflow-y:auto;max-height:260px"></div>
       </div>
     </div>
-    <div class="bell-wrap">
-      <svg width="17" height="17" viewBox="0 0 17 17" fill="none"><path d="M8.5 2.5A4.5 4.5 0 0 1 13 7v2.5l1.5 2.5H2.5L4 9.5V7A4.5 4.5 0 0 1 8.5 2.5z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 13.5a1.5 1.5 0 0 0 3 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-      <span class="bell-dot"></span>
+    <div class="seg" id="viewSeg">
+      <button class="seg-btn on" data-mode="units">Units</button>
+      <button class="seg-btn" data-mode="idv">Item Difficulty Value</button>
+    </div>
+    <div class="hdr-group">
+      <!-- <span class="hdr-lbl">Cards</span> -->
+      <div class="seg" id="kpiMetricSeg">
+        <button class="seg-btn on" data-metric="approved">Approved</button>
+        <button class="seg-btn" data-metric="shipped">Shipped</button>
+      </div>
     </div>
   </header>
 
-  <div class="sub-header">
-    <div style="display:flex;align-items:center;gap:6px">
-      <span class="tb-crumb">Home &nbsp;›&nbsp; Dashboard &nbsp;›&nbsp;</span>
-      <span class="tb-title">Production Dashboard</span>
-    </div>
-    <!-- <div class="date-range">
-      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="2" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M4 1v2M9 1v2M1 5h11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-      <span>Current: Jan 01, 2025 – Apr 30, 2026</span>
-      <span class="dr-sep">|</span>
-      <span>Compare: Jan 01, 2024 – Apr 30, 2025</span>
-    </div> -->
-  </div>
-
   <div class="content">
     <div class="kpi-section-hdr">
-      <span class="kpi-section-title">Year-over-Year Snapshot</span>
-      <span class="kpi-section-sub">Current year vs. last year</span>
+      <div class="kpi-section-hdr-l">
+        <span class="kpi-section-title">Year-over-Year Snapshot</span>
+        <span class="kpi-section-sub" id="kpiSub">Approved · current year vs. last year</span>
+      </div>
+      <div class="icon-seg" id="kpiViewSeg">
+        <button class="icon-seg-btn on" data-view="cards" title="Cards">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="1.5" width="4.5" height="4.5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="8" y="1.5" width="4.5" height="4.5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="1.5" y="8" width="4.5" height="4.5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="8" y="8" width="4.5" height="4.5" rx="1" stroke="currentColor" stroke-width="1.3"/></svg>
+        </button>
+        <button class="icon-seg-btn" data-view="chart" title="Chart">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1.5 12.5h11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><rect x="2.5" y="7" width="2" height="4" rx=".5" stroke="currentColor" stroke-width="1.2"/><rect x="6" y="4" width="2" height="7" rx=".5" stroke="currentColor" stroke-width="1.2"/><rect x="9.5" y="1.5" width="2" height="9.5" rx=".5" stroke="currentColor" stroke-width="1.2"/></svg>
+        </button>
+      </div>
     </div>
     <div class="kpi-strip" id="kpiStrip"></div>
+    <div class="kpi-chart" id="kpiChart" style="display:none"></div>
 
     <div class="table-card">
       <div class="tbar">
-        <div class="tbar-l" style="flex-direction:column;align-items:flex-start;gap:8px">
-          <div style="display:flex;align-items:center;gap:10px">
-            <span class="tbar-title" id="tbarTitle">Units</span>
-            <span class="badge" id="activeBadge">2025 vs 2026</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:8px">
-            <div class="seg" id="viewSeg">
-              <button class="seg-btn on" data-mode="units">Units</button>
-              <button class="seg-btn" data-mode="idv">Item Difficulty Value</button>
-            </div>
-          </div>
+        <div class="tbar-l">
+          <span class="tbar-title" id="tbarTitle">Units</span>
+          <span class="badge" id="activeBadge">2025 vs 2026</span>
         </div>
         <div class="tbar-r">
           <div class="filter-row" style="align-items:center">
@@ -705,6 +708,8 @@ function filterItemsByBrand(items){
 }
 
 let viewMode = 'units'; // 'units' | 'idv'
+let kpiMetric = 'approved'; // 'approved' | 'shipped' — which metric the YoY cards show
+let kpiView = 'cards'; // 'cards' | 'chart'
 
 // Distributes a month's (or full year's, when mi===null) raw unit total across
 // a factory's item catalog using each item's relative historical qty as weight,
@@ -773,8 +778,13 @@ function tdTotalCell(fid, metric, yr, curYr, divl){
 
 function buildKPI(){
   const strip = document.getElementById('kpiStrip');
-  const cols = Math.min(activeFactories.size, 7);
-  strip.style.gridTemplateColumns = `repeat(${cols}, minmax(0,1fr))`;
+  const chart = document.getElementById('kpiChart');
+  const cols = Math.min(activeFactories.size, 8);
+  strip.style.setProperty('--kpi-cols', cols);
+  strip.style.display = kpiView==='cards' ? '' : 'none';
+  chart.style.display = kpiView==='chart' ? '' : 'none';
+  document.getElementById('kpiSub').textContent =
+    `Current year vs. last year`;
 
   // Always current year vs. prior year — intentionally fixed regardless of the
   // Years/Factories filters below (see kpi-section-sub). The *window* itself is
@@ -784,9 +794,15 @@ function buildKPI(){
   const monthIdxs = Array.from({length: LAST_ELAPSED_MONTH + 1}, (_, i) => i);
   const priorYr = CURRENT_YEAR - 1;
 
-  strip.innerHTML = FACTORIES.filter(f=>activeFactories.has(f.id)).map(f=>{
-    const cur = monthIdxs.reduce((s,mi)=>s+displayVal(f.id,'approved',CURRENT_YEAR,mi),0);
-    const prev = monthIdxs.reduce((s,mi)=>s+displayVal(f.id,'approved',priorYr,mi),0);
+  const rows = FACTORIES.filter(f=>activeFactories.has(f.id)).map(f=>({
+    f,
+    cur:  monthIdxs.reduce((s,mi)=>s+displayVal(f.id,kpiMetric,CURRENT_YEAR,mi),0),
+    prev: monthIdxs.reduce((s,mi)=>s+displayVal(f.id,kpiMetric,priorYr,mi),0),
+  }));
+
+  if(kpiView==='chart'){ buildKPIChart(chart, rows, priorYr); return; }
+
+  strip.innerHTML = rows.map(({f,cur,prev})=>{
     const hasData = cur!==0 || prev!==0;
     const d = prev?Math.round((cur-prev)/prev*100):0;
     const dc = !hasData ? '#9CA3AF' : (d>=0?'#3B6D11':'#A32D2D');
@@ -798,6 +814,23 @@ function buildKPI(){
       <div class="metric-d" style="color:${dc}">${arrow}${Math.abs(d)}%</div>
     </div>`;
   }).join('');
+}
+
+function buildKPIChart(el, rows, priorYr){
+  const max = Math.max(1, ...rows.map(r=>Math.max(r.cur, r.prev)));
+  const pct = v => (v/max*100).toFixed(1)+'%';
+  el.innerHTML = `
+    <div class="kc-legend">
+      <span><i class="kc-sw" style="background:#D1D5DB"></i>${priorYr}</span>
+      <span><i class="kc-sw" style="background:#1B1F2E"></i>${CURRENT_YEAR} (factory color)</span>
+    </div>
+    <div class="kc-plot">${rows.map(({f,cur,prev})=>`
+      <div class="kc-grp">
+        <div class="kc-bar" style="height:${pct(prev)};background:#D1D5DB" title="${f.label} ${priorYr}: ${fmtDisplay(prev)}"></div>
+        <div class="kc-bar" style="height:${pct(cur)};background:${f.color}" title="${f.label} ${CURRENT_YEAR}: ${fmtDisplay(cur)}"></div>
+      </div>`).join('')}
+    </div>
+    <div class="kc-labels">${rows.map(({f})=>`<div class="kc-lbl" style="color:${f.textColor}">${f.label}</div>`).join('')}</div>`;
 }
 
 function buildTable(){
@@ -940,6 +973,26 @@ document.querySelectorAll('#viewSeg .seg-btn').forEach(btn=>{
     viewMode = btn.dataset.mode;
     document.querySelectorAll('#viewSeg .seg-btn').forEach(b=>b.classList.toggle('on', b===btn));
     refreshAll();
+  });
+});
+
+// ── Card metric toggle (Approved / Shipped) — affects YoY cards only ──
+document.querySelectorAll('#kpiMetricSeg .seg-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    if(btn.dataset.metric===kpiMetric) return;
+    kpiMetric = btn.dataset.metric;
+    document.querySelectorAll('#kpiMetricSeg .seg-btn').forEach(b=>b.classList.toggle('on', b===btn));
+    buildKPI();
+  });
+});
+
+// ── YoY view toggle (cards / chart) ──
+document.querySelectorAll('#kpiViewSeg .icon-seg-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    if(btn.dataset.view===kpiView) return;
+    kpiView = btn.dataset.view;
+    document.querySelectorAll('#kpiViewSeg .icon-seg-btn').forEach(b=>b.classList.toggle('on', b===btn));
+    buildKPI();
   });
 });
 
